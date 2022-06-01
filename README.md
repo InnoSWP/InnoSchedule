@@ -1,2 +1,5 @@
 # InnoSchedule
-Readme is in progress...
+InnoSchedule is an easy-to-use schedule editor.
+
+## Task
+Create simple web schedule editor for core courses and electives.
