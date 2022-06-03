@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import { Layout } from "./components/Layout";
 import { LoginPage } from "./components/LoginPage";
+import DevTimetable from "./Timetable.dev";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -13,9 +14,10 @@ root.render(
   <React.StrictMode>
       <BrowserRouter>
           <Routes>
-              <Route path={"/"} element={<App />} />
-              <Route path={"layout"} element={<Layout />} >
-                  <Route path={"login"} element={<LoginPage />}/>
+              <Route path={"/"} element={<Layout />}>
+                  <Route index element={<App />} />
+                  <Route path={"login"} element={<LoginPage />} />
+                  <Route path={"timetable"} element={<DevTimetable />} />
               </Route>
               <Route path={"*"} element={<p>404</p>} />
           </Routes>
