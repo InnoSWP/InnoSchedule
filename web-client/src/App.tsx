@@ -1,3 +1,5 @@
+import "./App.css"
+
 import React from 'react';
 import { Timetable } from "components/Timetable";
 import { DateTime, Interval } from "luxon";

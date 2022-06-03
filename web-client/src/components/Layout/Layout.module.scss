@@ -1,6 +1,24 @@
+@use "src/styles/colors";
+
 .Layout {
   .header {
+    display: flex;
+    align-items: center;
 
+    color: white;
+
+    overflow: hidden;
+
+    height: 64px;
+    width: 100%;
+    background-color: colors.$evergreen-neutral-n800;
+
+    padding: 0 16px 0 16px;
+
+    h1 {
+      font-size: 24px;
+      font-weight: 600;
+    }
   }
   .main {
 

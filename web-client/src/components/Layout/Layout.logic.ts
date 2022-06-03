@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { useOutletContext } from "react-router-dom";
 
 export const useLayoutLogic = () => {
@@ -10,6 +10,10 @@ export const useLayoutLogic = () => {
     }
 }
 
-export const useSetLabel = () => {
-    return useOutletContext<CallableFunction>();
+export const useSetLabel = (label: string) => {
+    const setLabel = useOutletContext<CallableFunction>();
+
+    useEffect(() => {
+        setLabel(label);
+    }, []);
 }

@@ -5,9 +5,8 @@ import { useSetLabel } from "../Layout";
 export const LoginPage:React.FunctionComponent = () => {
 
     const logic = useLoginPageLogic();
-    const setLabel = useSetLabel();
 
-    setLabel("Login");
+    useSetLabel("Hello");
 
     return <p>Hello from login page</p>;
 }
