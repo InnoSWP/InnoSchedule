@@ -6,6 +6,7 @@ import { Outlet } from "react-router-dom";
 export const Layout:React.FunctionComponent = () => {
 
     const logic = useLayoutLogic();
+
     const [label, setLabel] = logic.useLabel();
 
     return <div className={styles["Layout"]}>

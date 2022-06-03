@@ -3,7 +3,8 @@ import { useOutletContext } from "react-router-dom";
 
 export const useLayoutLogic = () => {
     return {
-        useLabel: ():[string, any] => {
+        useLabel: ():[string, any] => { // TODO Make useLabel() => useHeader() with onClickCallback function
+
             const [label, setLabel] = useState<string>("App name");
             return [label, setLabel];
         }
