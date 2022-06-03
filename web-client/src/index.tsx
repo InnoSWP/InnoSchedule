@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Layout } from "./components/Layout";
 import { LoginPage } from "./components/LoginPage";
 import DevTimetable from "./Timetable.dev";
+import {ScheduleEditor} from "./components/ScheduleEditor";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -17,6 +18,7 @@ root.render(
               <Route path={"/"} element={<Layout />}>
                   <Route index element={<App />} />
                   <Route path={"login"} element={<LoginPage />} />
+                  <Route path={"editor"} element={<ScheduleEditor />} />
                   <Route path={"timetable"} element={<DevTimetable />} />
               </Route>
               <Route path={"*"} element={<p>404</p>} />
