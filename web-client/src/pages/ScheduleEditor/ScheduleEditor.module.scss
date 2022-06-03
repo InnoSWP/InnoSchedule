@@ -1,6 +1,11 @@
+@use "src/styles/colors";
+
 .ScheduleEditor {
   .toolbar {
     height: 32px;
+    width: 100%;
 
+    background-color: colors.$evergreen-neutral-n0;
+    border-bottom: 1px solid colors.$evergreen-stroke;
   }
 }
