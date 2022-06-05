@@ -1,0 +1,11 @@
+.MultipleFields {
+  margin-top: 8px;
+
+  display: flex;
+  flex-direction: column;
+
+  .button {
+    align-self: start;
+  }
+}
+

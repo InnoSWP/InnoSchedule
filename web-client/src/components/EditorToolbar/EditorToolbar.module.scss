@@ -1,0 +1,19 @@
+@use "src/styles/colors";
+
+.EditorToolbar {
+  display: flex;
+  align-items: center;
+
+  padding-left: 8px;
+
+  gap: 8px;
+
+  box-sizing: border-box;
+
+  height: 40px;
+  width: 100%;
+
+  background-color: colors.$material-primary-text;
+  border-bottom: 1px solid colors.$material-stroke;
+
+}

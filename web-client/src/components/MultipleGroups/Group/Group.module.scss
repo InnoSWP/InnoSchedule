@@ -1,0 +1,15 @@
+.Group {
+  display: flex;
+  justify-content: start;
+  align-items: start;
+
+  gap: 8px;
+
+  .first {
+    padding-top: 8px;
+    flex-shrink: 4;
+  }
+  .button {
+    margin-top: 13px;
+  }
+}

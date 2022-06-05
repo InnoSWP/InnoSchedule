@@ -1,0 +1,11 @@
+.AddCourseDialog {
+  .name-acronym-container {
+    display: flex;
+
+    gap: 8px;
+
+    .name {
+      flex-shrink: 0.5;
+    }
+  }
+}
