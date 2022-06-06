@@ -5,6 +5,7 @@ import { TimetableRow } from "./TimetableRow";
 import { TimetableHeader } from "./TimetableHeader";
 import { ColumnObjectWrapper } from "components/Timetable/ColumnObjectWrappers/ColumnObjectWrapper";
 import styles from "./Timetable.module.scss";
+import axisStyles from "./TimetableAxis.module.scss";
 
 export interface TimetableProps {
     workingHours  : Interval,
@@ -15,8 +16,9 @@ export const Timetable : React.FunctionComponent<TimetableProps> = (props) => {
     let logic = useTimetableLogic(props);
     let intervals = logic.workingHoursToHalfHourIntervals();
 
-    return <table className={styles.timetable}>
+    return <table className={styles["timetable"]}>
         <TimetableHeader {...props}></TimetableHeader>
+
         <tbody>
             { intervals.map(getTableRow.bind(this, props)) }
         </tbody>
