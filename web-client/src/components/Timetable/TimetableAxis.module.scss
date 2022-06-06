@@ -1,3 +1,9 @@
-.axis-cell {
-  width: 16px;
+@use "src/styles/colors";
+
+.axisCell {
+  width: 52px;
+  text-align: right;
+  vertical-align: top;
+
+  color: #A7A7A7;
 }
