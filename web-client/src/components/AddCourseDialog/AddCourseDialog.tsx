@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./AddCourseDialog.module.scss";
 import {
     Button,
@@ -11,6 +11,8 @@ import {
     TextField
 } from "@mui/material";
 import { MultipleGroups } from "../MultipleGroups";
+import { useAddCourseDialogLogic } from "./AddCourseDialog.logic";
+import {MultipleFields} from "../MultipleFields";
 
 interface AddCourseDialogProps {
     open: boolean;
@@ -19,37 +21,53 @@ interface AddCourseDialogProps {
 
 export const AddCourseDialog:React.FunctionComponent<AddCourseDialogProps> = (props) => {
 
-    return <Dialog open={props.open} onClose={props.onClose} scroll={"paper"}>
+    const logic = useAddCourseDialogLogic();
+    const [isDivision, setDivision] = useState<boolean>(false);
+
+    return <Dialog open={props.open} onClose={props.onClose} scroll={"paper"} fullWidth>
         <DialogTitle>Add Course</DialogTitle>
         <DialogContent className={styles["AddCourseDialog"]}>
-            <FormGroup>
-                <div className={styles["name-acronym-container"]}>
-                    <TextField
-                        className={styles["name"]}
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        label="Course name"
-                        fullWidth
-                        variant="standard"
-                    />
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="acronym"
-                        label="Acronym"
-                        fullWidth
-                        variant="standard"
-                    />
-                </div>
+            <form onSubmit={(e) => {
+                e.preventDefault();
+                console.log(e.target);
+            }}>
+                <FormGroup>
+                    <div className={styles["name-acronym-container"]}>
+                        <TextField
+                            className={styles["name"]}
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            label="Course name"
+                            fullWidth
+                            variant="standard"
+                        />
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="acronym"
+                            label="Acronym"
+                            fullWidth
+                            variant="standard"
+                        />
+                    </div>
 
-                <div className={styles["teachers"]}>
-                    <FormControlLabel control={<Switch />} label="Division" />
-                    {/*{<MultipleFields id={"teacher"} label={"Teachers"} placeholder={"Teacher"} autoFocus />}*/}
-                    {<MultipleGroups id={"group"} label={"Groups"} placeholder={"Group"} autoFocus />}
-                </div>
+                    <div className={styles["teachers"]}>
+                        <FormControlLabel control={<Switch checked={isDivision}
+                                                           onClick={() => {
+                                                               setDivision((isDivision) => !isDivision);
+                                                           }} />}
+                                          label="Division" />
 
-            </FormGroup>
+                        { isDivision ?
+                            <MultipleGroups id={"group"} label={"Groups"} placeholder={"Group"} autoFocus /> :
+                            <MultipleFields id={"teacher"} label={"Teachers"} placeholder={"Teacher"} autoFocus /> }
+                    </div>
+
+                    <button type="submit">Submit</button>
+
+                </FormGroup>
+            </form>
         </DialogContent>
         <DialogActions>
             <Button onClick={props.onClose}>Cancel</Button>

@@ -1,6 +1,6 @@
 
 
-export const useCourseListCardLogic = () => {
+export const useAddCourseDialogLogic = () => {
     return {
 
     }

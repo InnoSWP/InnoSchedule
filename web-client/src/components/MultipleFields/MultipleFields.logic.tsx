@@ -34,7 +34,7 @@ export const useMultipleFieldsLogic = (props: MultipleFieldsProps) => {
                            key={newFieldId}
                            onRemove={removeField}
                            placeholder={props.placeholder}
-                           autoFocus />
+                           autoFocus={props.autoFocus} />
                 ]);
             }
 

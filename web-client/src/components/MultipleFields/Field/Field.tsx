@@ -15,7 +15,7 @@ export const Field:React.FunctionComponent<FieldProps> = (props) => {
         <TextField
             autoFocus={props.autoFocus}
             margin="dense"
-            id={props.id + "0"}
+            id={props.id}
             fullWidth
             variant="standard"
             placeholder={props.placeholder}

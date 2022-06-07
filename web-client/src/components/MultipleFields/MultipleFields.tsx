@@ -10,6 +10,7 @@ export interface MultipleFieldsProps {
     label: string;
     placeholder: string;
 
+    autoFocus?: boolean;
     hideLabel?: boolean;
 }
 
