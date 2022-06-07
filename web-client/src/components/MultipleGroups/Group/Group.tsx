@@ -23,11 +23,11 @@ export const Group:React.FunctionComponent<GroupProps> = (props) => {
             placeholder={props.placeholder}
         />
         <MultipleFields  id={props.id + "-teachers"} placeholder={"Teacher"} label={"Teachers"} hideLabel={true} />
-        <IconButton color="primary"
+        <IconButton color="error"
                     className={styles["button"]}
-                   aria-label="delete"
-                   size="small"
-                   onClick={() => {props.onRemove(props.id)}}>
+                    aria-label="delete"
+                    size="small"
+                    onClick={() => {props.onRemove(props.id)}}>
             <DeleteIcon />
         </IconButton>
 
