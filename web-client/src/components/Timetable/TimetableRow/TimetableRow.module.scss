@@ -1,6 +1,11 @@
 @use "src/styles/colors";
 
 .timetableRow {
-  height: 24px;
+  height: 32px;
   font-size: 12px;
+
+  .timetableRowCell {
+    border-left: colors.$material-stroke 1px solid;
+    border-right: colors.$material-stroke 1px solid;
+  }
 }

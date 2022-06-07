@@ -23,5 +23,5 @@ export const TimetableRow: React.FunctionComponent<TimetableRowProps> = (props) 
 }
 
 function getRowCell(object : ColumnObjectWrapper<any>, index : number) {
-    return <td key={index}></td>
+    return <td key={index} className={styles["timetableRowCell"]}></td>
 }

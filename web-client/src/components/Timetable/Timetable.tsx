@@ -5,7 +5,6 @@ import { TimetableRow } from "./TimetableRow";
 import { TimetableHeader } from "./TimetableHeader";
 import { ColumnObjectWrapper } from "components/Timetable/ColumnObjectWrappers/ColumnObjectWrapper";
 import styles from "./Timetable.module.scss";
-import axisStyles from "./TimetableAxis.module.scss";
 
 export interface TimetableProps {
     workingHours  : Interval,
