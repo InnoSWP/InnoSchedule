@@ -4,7 +4,7 @@ import { TextField } from "@mui/material";
 import { useRangeSelectorLogic } from "./RangeSelector.logic";
 
 export interface RangeSelectorProps {
-    children: JSX.Element | string;
+    children?: JSX.Element | string | never[];
     type?: "time" | "date";
     width?: string;
 

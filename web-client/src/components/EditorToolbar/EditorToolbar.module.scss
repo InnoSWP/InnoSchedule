@@ -5,8 +5,10 @@
   align-items: center;
 
   padding-left: 8px;
+  padding-right: 16px;
 
-  gap: 8px;
+  gap: 16px;
+  //justify-content: space-between;
 
   box-sizing: border-box;
 
@@ -15,5 +17,12 @@
 
   background-color: colors.$material-primary-text;
   border-bottom: 1px solid colors.$material-stroke;
+
+  .group {
+    display: flex;
+    gap: 8px;
+
+    margin-left: auto;
+  }
 
 }

@@ -27,10 +27,7 @@ export const AddCourseDialog:React.FunctionComponent<AddCourseDialogProps> = (pr
     return <Dialog open={props.open} onClose={props.onClose} scroll={"paper"} fullWidth>
         <DialogTitle>Add Course</DialogTitle>
         <DialogContent className={styles["AddCourseDialog"]}>
-            <form onSubmit={(e) => {
-                e.preventDefault();
-                console.log(e.target);
-            }}>
+            <form onSubmit={logic.useForm()}>
                 <FormGroup>
                     <div className={styles["name-acronym-container"]}>
                         <TextField
@@ -59,8 +56,7 @@ export const AddCourseDialog:React.FunctionComponent<AddCourseDialogProps> = (pr
                                                            }} />}
                                           label="Division" />
 
-                        { isDivision ?
-                            <MultipleGroups id={"group"} label={"Groups"} placeholder={"Group"} autoFocus /> :
+                        { isDivision ? <MultipleGroups id={"group"} label={"Groups"} placeholder={"Group"} autoFocus /> :
                             <MultipleFields id={"teacher"} label={"Teachers"} placeholder={"Teacher"} autoFocus /> }
                     </div>
 
