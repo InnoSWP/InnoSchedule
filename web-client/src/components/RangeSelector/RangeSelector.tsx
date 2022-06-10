@@ -1,10 +1,10 @@
-import React from "react";
+import React, {ReactElement} from "react";
 import styles from "./RangeSelector.module.scss";
 import { TextField } from "@mui/material";
 import { useRangeSelectorLogic } from "./RangeSelector.logic";
 
 export interface RangeSelectorProps {
-    children?: JSX.Element | string | never[];
+    children?: ReactElement | string | never[];
     type?: "time" | "date";
     width?: string;
 

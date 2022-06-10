@@ -1,9 +1,15 @@
 import { Teacher } from "models/Teacher";
 import { FormEvent } from "react";
 import { CourseGroup, Course } from "../../models/Course";
+import { add, useAppDispatch, useAppSelector } from "../../store/ScheduleEditorStore/ScheduleEditorStore.logic";
+import { AddCourseDialogProps } from "./AddCourseDialog";
 
 
-export const useAddCourseDialogLogic = () => {
+export const useAddCourseDialogLogic = (props: AddCourseDialogProps) => {
+
+    const dispatch = useAppDispatch();
+    const courses = useAppSelector((state) => state.courses.courses);
+
     return {
         useForm: () => {
             return (event: FormEvent<HTMLFormElement>) => {
@@ -48,8 +54,24 @@ export const useAddCourseDialogLogic = () => {
                 }
 
                 const course = new Course(courseName, courseAcronym, isDivision, groups);
-                console.log(course);
+                dispatch(add({
+                    courseId: props.courseId,
+                    courseToAdd: course
+                }));
             }
+        },
+
+        useAutofill: ():Course => {
+            if (!courses[props.courseId]) {
+                return new Course(
+                    "",
+                    "",
+                    false,
+                    [new CourseGroup("default", [new Teacher("")])]
+                );
+            }
+
+            return courses[props.courseId];
         }
     }
 }

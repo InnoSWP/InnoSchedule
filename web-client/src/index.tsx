@@ -6,7 +6,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Layout } from "./pages/Layout";
 import { LoginPage } from "./pages/LoginPage";
 import DevTimetable from "./pages/Timetable.dev";
-import {ScheduleEditor} from "./pages/ScheduleEditor";
+import { ScheduleEditor } from "./pages/ScheduleEditor";
+import store from "./store/ScheduleEditorStore/ScheduleEditorStore";
+import { Provider } from "react-redux";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -14,15 +16,17 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
       <BrowserRouter>
-          <Routes>
-              <Route path={"/"} element={<Layout />}>
-                  <Route index element={<App />} />
-                  <Route path={"login"} element={<LoginPage />} />
-                  <Route path={"editor"} element={<ScheduleEditor />} />
-                  <Route path={"timetable"} element={<DevTimetable />} />
-              </Route>
-              <Route path={"*"} element={<p>404</p>} />
-          </Routes>
+          <Provider store={store}>
+              <Routes>
+                  <Route path={"/"} element={<Layout />}>
+                      <Route index element={<App />} />
+                      <Route path={"login"} element={<LoginPage />} />
+                      <Route path={"editor"} element={<ScheduleEditor />} />
+                      <Route path={"timetable"} element={<DevTimetable />} />
+                  </Route>
+                  <Route path={"*"} element={<p>404</p>} />
+              </Routes>
+          </Provider>
       </BrowserRouter>
   </React.StrictMode>
 );

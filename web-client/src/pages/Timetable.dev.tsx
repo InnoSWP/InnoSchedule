@@ -6,6 +6,7 @@ import { WeekDayColumnObjectWrapper } from "components/Timetable/ColumnObjectWra
 
 
 function DevTimetable() {
+
     let workingHours = Interval.fromDateTimes(
         DateTime.fromObject({
             hour: 9,

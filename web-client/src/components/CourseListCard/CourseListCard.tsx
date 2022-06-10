@@ -5,6 +5,9 @@ import {Button, Card, CardActions, CardContent, Typography} from "@mui/material"
 interface CourseListCardProps {
     label: string;
     classes: number;
+
+    onRemove: CallableFunction;
+    onEdit: CallableFunction;
 }
 
 export const CourseListCard:React.FunctionComponent<CourseListCardProps> = (props) => {
@@ -19,7 +22,8 @@ export const CourseListCard:React.FunctionComponent<CourseListCardProps> = (prop
             </Typography>
         </CardContent>
         <CardActions>
-            <Button>Edit</Button>
+            <Button onClick={() => {props.onRemove()}}>Remove</Button>
+            <Button onClick={() => {props.onEdit()}}>Edit</Button>
         </CardActions>
     </Card>;
 }

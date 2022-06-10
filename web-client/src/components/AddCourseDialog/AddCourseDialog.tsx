@@ -12,22 +12,30 @@ import {
 } from "@mui/material";
 import { MultipleGroups } from "../MultipleGroups";
 import { useAddCourseDialogLogic } from "./AddCourseDialog.logic";
-import {MultipleFields} from "../MultipleFields";
+import { MultipleFields } from "../MultipleFields";
 
-interface AddCourseDialogProps {
+export interface AddCourseDialogProps {
     open: boolean;
     onClose: () => void;
+    courseId: number;
 }
 
 export const AddCourseDialog:React.FunctionComponent<AddCourseDialogProps> = (props) => {
 
-    const logic = useAddCourseDialogLogic();
+    const logic = useAddCourseDialogLogic(props);
     const [isDivision, setDivision] = useState<boolean>(false);
+    const autofill = logic.useAutofill();
 
+    setDivision(autofill.isDivision);
+
+    /*
+     TODO Autofill for MultipleGroups and MultipleFields
+     TODO Add CourseAutofillData interface
+     */
     return <Dialog open={props.open} onClose={props.onClose} scroll={"paper"} fullWidth>
         <DialogTitle>Add Course</DialogTitle>
         <DialogContent className={styles["AddCourseDialog"]}>
-            <form onSubmit={logic.useForm()}>
+            <form id={"put-course"} onSubmit={logic.useForm()}>
                 <FormGroup>
                     <div className={styles["name-acronym-container"]}>
                         <TextField
@@ -38,6 +46,7 @@ export const AddCourseDialog:React.FunctionComponent<AddCourseDialogProps> = (pr
                             label="Course name"
                             fullWidth
                             variant="standard"
+                            defaultValue={autofill.name}
                         />
                         <TextField
                             autoFocus
@@ -46,6 +55,7 @@ export const AddCourseDialog:React.FunctionComponent<AddCourseDialogProps> = (pr
                             label="Acronym"
                             fullWidth
                             variant="standard"
+                            defaultValue={autofill.acronym}
                         />
                     </div>
 
@@ -56,18 +66,23 @@ export const AddCourseDialog:React.FunctionComponent<AddCourseDialogProps> = (pr
                                                            }} />}
                                           label="Division" />
 
-                        { isDivision ? <MultipleGroups id={"group"} label={"Groups"} placeholder={"Group"} autoFocus /> :
-                            <MultipleFields id={"teacher"} label={"Teachers"} placeholder={"Teacher"} autoFocus /> }
+                        { isDivision ?
+                            <MultipleGroups id={"group"}
+                                            label={"Groups"}
+                                            placeholder={"Group"}
+                                            autoFocus />
+                            :
+                            <MultipleFields id={"teacher"}
+                                            label={"Teachers"}
+                                            placeholder={"Teacher"}
+                                            autoFocus /> }
                     </div>
-
-                    <button type="submit">Submit</button>
-
                 </FormGroup>
             </form>
         </DialogContent>
         <DialogActions>
             <Button onClick={props.onClose}>Cancel</Button>
-            <Button onClick={props.onClose}>Add</Button>
+            <Button type={"submit"} form={"put-course"} onClick={props.onClose}>Add</Button>
         </DialogActions>
     </Dialog>;
 }
