@@ -1,1 +1,1 @@
-from .teacher import TeachersListView, TeacherView
+from .teacher import TeacherViewSet
