@@ -12,6 +12,11 @@ export interface MultipleFieldsProps {
 
     autoFocus?: boolean;
     hideLabel?: boolean;
+    autofill?: Array<FieldData>;
+}
+
+export interface FieldData {
+    name: string;
 }
 
 export const MultipleFields:React.FunctionComponent<MultipleFieldsProps> = (props) => {

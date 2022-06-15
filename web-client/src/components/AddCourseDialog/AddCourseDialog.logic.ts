@@ -1,8 +1,12 @@
 import { Teacher } from "models/Teacher";
 import { FormEvent } from "react";
 import { CourseGroup, Course } from "../../models/Course";
-import { add, useAppDispatch, useAppSelector } from "../../store/ScheduleEditorStore/ScheduleEditorStore.logic";
-import { AddCourseDialogProps } from "./AddCourseDialog";
+import {AddCourseDialogProps, CourseData} from "./AddCourseDialog";
+import {
+    addCourse,
+    useAppDispatch,
+    useAppSelector
+} from "store";
 
 
 export const useAddCourseDialogLogic = (props: AddCourseDialogProps) => {
@@ -35,7 +39,6 @@ export const useAddCourseDialogLogic = (props: AddCourseDialogProps) => {
 
                             const teachers: Array<Teacher> = [];
                             for (i = i+1; (formElements[i] as HTMLInputElement).id.startsWith(groupId); i=i+2) {
-                                console.log((formElements[i] as HTMLInputElement).id);
                                 teachers.push(new Teacher((formElements[i] as HTMLInputElement).value));
                             }
                             i=i+2;
@@ -54,24 +57,50 @@ export const useAddCourseDialogLogic = (props: AddCourseDialogProps) => {
                 }
 
                 const course = new Course(courseName, courseAcronym, isDivision, groups);
-                dispatch(add({
+                dispatch(addCourse({
                     courseId: props.courseId,
                     courseToAdd: course
                 }));
             }
         },
 
-        useAutofill: ():Course => {
-            if (!courses[props.courseId]) {
-                return new Course(
-                    "",
-                    "",
-                    false,
-                    [new CourseGroup("default", [new Teacher("")])]
-                );
+        useAutofill: ():CourseData => {
+
+            const course = courses[props.courseId];
+
+            if (!course) {
+                return {
+                    name: "",
+                    acronym: "",
+                    isDivision: false,
+
+                    groups: [{
+                        name: "",
+                        group: [{
+                            name: ""
+                        }]
+                    }]
+                };
             }
 
-            return courses[props.courseId];
+
+            const groups = course.groups.map((e) => {
+                return {
+                    name: e.name,
+                    group: e.teachers.map((e) => {
+                        return {
+                            name: e.name
+                        }
+                    })
+                }
+            })
+
+            return {
+                name: course.name,
+                acronym: course.acronym,
+                isDivision: course.isDivision,
+                groups
+            }
         }
     }
 }

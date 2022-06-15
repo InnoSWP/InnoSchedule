@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import styles from "./AddCourseDialog.module.scss";
 import {
     Button,
@@ -10,7 +10,7 @@ import {
     Switch,
     TextField
 } from "@mui/material";
-import { MultipleGroups } from "../MultipleGroups";
+import {GroupData, MultipleGroups} from "../MultipleGroups";
 import { useAddCourseDialogLogic } from "./AddCourseDialog.logic";
 import { MultipleFields } from "../MultipleFields";
 
@@ -20,18 +20,24 @@ export interface AddCourseDialogProps {
     courseId: number;
 }
 
+export interface CourseData {
+    name: string;
+    acronym: string;
+    isDivision: boolean;
+
+    groups: Array<GroupData>;
+}
+
 export const AddCourseDialog:React.FunctionComponent<AddCourseDialogProps> = (props) => {
 
     const logic = useAddCourseDialogLogic(props);
     const [isDivision, setDivision] = useState<boolean>(false);
     const autofill = logic.useAutofill();
 
-    setDivision(autofill.isDivision);
+    useEffect(() => {
+        setDivision(autofill.isDivision);
+    }, [props]);
 
-    /*
-     TODO Autofill for MultipleGroups and MultipleFields
-     TODO Add CourseAutofillData interface
-     */
     return <Dialog open={props.open} onClose={props.onClose} scroll={"paper"} fullWidth>
         <DialogTitle>Add Course</DialogTitle>
         <DialogContent className={styles["AddCourseDialog"]}>
@@ -70,12 +76,14 @@ export const AddCourseDialog:React.FunctionComponent<AddCourseDialogProps> = (pr
                             <MultipleGroups id={"group"}
                                             label={"Groups"}
                                             placeholder={"Group"}
-                                            autoFocus />
+                                            autoFocus
+                                            autofill={autofill.groups}/>
                             :
                             <MultipleFields id={"teacher"}
                                             label={"Teachers"}
                                             placeholder={"Teacher"}
-                                            autoFocus /> }
+                                            autoFocus
+                                            autofill={autofill.groups[0].group}/> }
                     </div>
                 </FormGroup>
             </form>

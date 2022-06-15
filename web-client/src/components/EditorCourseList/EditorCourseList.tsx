@@ -5,7 +5,11 @@ import AddIcon from '@mui/icons-material/Add';
 import { CourseListCard } from "../CourseListCard";
 import { useEditorCourseListLogic } from "./EditorCourseList.logic";
 import { AddCourseDialog } from "../AddCourseDialog";
-import { remove, useAppDispatch, useAppSelector } from "../../store/ScheduleEditorStore/ScheduleEditorStore.logic";
+import {
+    removeCourse,
+    useAppDispatch,
+    useAppSelector
+} from "store";
 
 export interface EditorCourseListProps {
 
@@ -40,7 +44,7 @@ export const EditorCourseList:React.FunctionComponent<EditorCourseListProps> = (
                                                     label={e.name}
                                                     classes={10}
 
-                                                    onRemove={() => {dispatch(remove(i))}}
+                                                    onRemove={() => {dispatch(removeCourse(i))}}
                                                     onEdit={() => {openDialog(i)}}/>) }
         </div>
     </div>

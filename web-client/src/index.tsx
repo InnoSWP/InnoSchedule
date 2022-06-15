@@ -7,12 +7,14 @@ import { Layout } from "./pages/Layout";
 import { LoginPage } from "./pages/LoginPage";
 import DevTimetable from "./pages/Timetable.dev";
 import { ScheduleEditor } from "./pages/ScheduleEditor";
-import store from "./store/ScheduleEditorStore/ScheduleEditorStore";
+import store from "./store/store";
 import { Provider } from "react-redux";
+import { ScheduleStorage } from "./pages/ScheduleStorage";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
       <BrowserRouter>
@@ -21,7 +23,9 @@ root.render(
                   <Route path={"/"} element={<Layout />}>
                       <Route index element={<App />} />
                       <Route path={"login"} element={<LoginPage />} />
-                      <Route path={"editor"} element={<ScheduleEditor />} />
+                      <Route path={"storage"} element={<ScheduleStorage />} />
+                      <Route path={"editor/:id"} element={<ScheduleEditor />}>
+                      </Route>
                       <Route path={"timetable"} element={<DevTimetable />} />
                   </Route>
                   <Route path={"*"} element={<p>404</p>} />
