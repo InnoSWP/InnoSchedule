@@ -1,7 +1,7 @@
 from rest_framework.serializers import ModelSerializer
 from rest_framework_bulk import BulkSerializerMixin, BulkListSerializer
 
-from ..models.teacher import TeacherModel
+from ..models import TeacherModel
 
 
 class TeacherSerializer(BulkSerializerMixin, ModelSerializer):
