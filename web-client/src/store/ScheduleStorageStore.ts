@@ -1,8 +1,8 @@
-import { createData, Data } from "components/SchedulesList";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { CoursesListData, createData } from "models/CoursesListData";
 
 interface StorageState {
-    schedules: Array<Data>;
+    schedules: Array<CoursesListData>;
 }
 
 const initialState: StorageState = {
@@ -16,7 +16,7 @@ const initialState: StorageState = {
 
 interface addCoursePayloadActionProps {
     scheduleId: number;
-    scheduleToAdd: Data;
+    scheduleToAdd: CoursesListData;
 }
 
 export const schedulesSlice = createSlice({

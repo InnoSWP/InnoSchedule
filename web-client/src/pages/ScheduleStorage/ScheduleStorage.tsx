@@ -6,6 +6,7 @@ import { useScheduleStorageLogic } from "./ScheduleStorage.logic";
 import { SchedulesList } from "components/SchedulesList";
 import { FieldDialog } from "components/FieldDialog";
 import { ConfirmationDialog } from "../../components/ConfirmationDialog";
+import {useAppSelector} from "../../store";
 
 export const ScheduleStorage:React.FunctionComponent = () => {
 
@@ -25,8 +26,31 @@ export const ScheduleStorage:React.FunctionComponent = () => {
         handleRemoveConfirm
     ] = logic.useRemoveScheduleDialog();
 
+    const rows = useAppSelector((state) => state.schedules.schedules);
+    const columns = [
+        {
+            id: "name",
+            disablePadding: false,
+            numeric: false,
+            label: "File Name",
+            type: "text"
+        },
+        {
+            id: "published",
+            disablePadding: false,
+            numeric: false,
+            label: "Published",
+            type: "boolean"
+        }
+    ];
+
     return <div className={styles["ScheduleStorage"]}>
-        <SchedulesList createNew={handleCreateNew} removeItems={handleRemoveOpen} />
+        <SchedulesList
+            createNew={handleCreateNew}
+            removeItems={handleRemoveOpen}
+            rows={rows}
+            headCells={columns}/>
+
         <FieldDialog
 
             label={"Add Course"}

@@ -22,13 +22,13 @@ root.render(
               <Routes>
                   <Route path={"/"} element={<Layout />}>
                       <Route index element={<App />} />
-                      <Route path={"login"} element={<LoginPage />} />
                       <Route path={"storage"} element={<ScheduleStorage />} />
                       <Route path={"editor/:id"} element={<ScheduleEditor />}>
                       </Route>
                       <Route path={"timetable"} element={<DevTimetable />} />
                   </Route>
                   <Route path={"*"} element={<p>404</p>} />
+                  <Route path={"login"} element={<LoginPage />} />
               </Routes>
           </Provider>
       </BrowserRouter>

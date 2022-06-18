@@ -38,7 +38,7 @@ export const AddCourseDialog:React.FunctionComponent<AddCourseDialogProps> = (pr
         setDivision(autofill.isDivision);
     }, [props]);
 
-    return <Dialog open={props.open} onClose={props.onClose} scroll={"paper"} fullWidth>
+    return <Dialog open={props.open} scroll={"paper"} fullWidth> {/*onClose={props.onClose}*/}
         <DialogTitle>Add Course</DialogTitle>
         <DialogContent className={styles["AddCourseDialog"]}>
             <form id={"put-course"} onSubmit={logic.useForm()}>

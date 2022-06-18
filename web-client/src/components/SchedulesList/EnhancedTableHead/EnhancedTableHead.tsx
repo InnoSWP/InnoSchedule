@@ -6,50 +6,40 @@ import Checkbox from "@mui/material/Checkbox";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import Box from "@mui/material/Box";
 import { visuallyHidden } from "@mui/utils";
-import { Data, Order } from "..";
+import {BaseRow, Order, TableColumn} from "..";
 
-interface HeadCell {
-    disablePadding: boolean;
-    id: keyof Data;
-    label: string;
-    numeric: boolean;
-}
-
-const headCells: readonly HeadCell[] = [
-    {
-        id: 'name',
-        numeric: false,
-        disablePadding: true,
-        label: 'Module name',
-    },
-    {
-        id: 'published',
-        numeric: false,
-        disablePadding: false,
-        label: 'Published',
-    },
-    /*{
-        id: 'lastModified',
-        numeric: false,
-        disablePadding: false,
-        label: 'Last Modified',
-    }*/
-];
-
-interface EnhancedTableProps {
+interface EnhancedTableProps<D extends BaseRow> {
     numSelected: number;
-    onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void;
+    onRequestSort: (event: React.MouseEvent<unknown>, property: keyof D) => void;
     onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
     order: Order;
-    orderBy: string;
+    orderBy: keyof D;
     rowCount: number;
+    headCells: readonly TableColumn<D>[];
 }
 
-export const EnhancedTableHead: React.FunctionComponent<EnhancedTableProps> = (props) => {
-    const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
+// const headCells: readonly TableColumn<D>[] = [
+//     {
+//         id: 'name',
+//         numeric: false,
+//         type: "text",
+//         disablePadding: true,
+//         label: 'Module name',
+//     },
+//     {
+//         id: 'published',
+//         numeric: false,
+//         type: "boolean",
+//         disablePadding: false,
+//         label: 'Published',
+//     }
+// ];
+
+export const EnhancedTableHead: React.FunctionComponent<any> = <D extends BaseRow>(props: EnhancedTableProps<D>) => {
+    const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort, headCells } =
         props;
     const createSortHandler =
-        (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
+        (property: keyof D) => (event: React.MouseEvent<unknown>) => {
             onRequestSort(event, property);
         };
 

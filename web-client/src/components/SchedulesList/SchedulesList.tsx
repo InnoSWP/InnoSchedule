@@ -3,7 +3,7 @@ import {
     getComparator,
     useSchedulesListLogic
 } from "./SchedulesList.logic";
-import React from 'react';
+import React, {ReactNode} from 'react';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -17,21 +17,42 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { EnhancedTableToolbar } from "./EnhancedTableToolbar";
 import { EnhancedTableHead } from "./EnhancedTableHead";
-import { useAppSelector } from "../../store";
 
-export interface SchedulesListProps {
+export interface BaseRow {
+    id: number;
+    name: string;
+}
+
+export interface TableColumn<D extends BaseRow> {
+    id: string & keyof D;
+    disablePadding: boolean;
+    numeric: boolean;
+    label: string;
+    type: "boolean" | "text" | "date" | "number";
+}
+
+export interface SchedulesListProps<D extends BaseRow> {
    createNew: () => void;
    removeItems: (
        selected: readonly string[],
        resetSelect: (selected: readonly string[]) => void
-   ) => void
+   ) => void;
+
+   columns: Array<keyof D>;
+   rows: D[];
+
+   headCells: Array<TableColumn<D>>;
 }
 
-export const SchedulesList:React.FunctionComponent<SchedulesListProps> = (props) => {
+export const SchedulesList:React.FunctionComponent<any> = <D extends BaseRow>(
+    props: SchedulesListProps<D> & { children?: ReactNode }
+) => {
 
-    const rows = useAppSelector((state) => state.schedules.schedules);
+    /*const rows = useAppSelector((state) => state.schedules.schedules);*/
 
-    const logic = useSchedulesListLogic(props, rows);
+    const rows = props.rows;
+
+    const logic = useSchedulesListLogic<D>(props);
     const [
         selected,
         order,
@@ -51,6 +72,8 @@ export const SchedulesList:React.FunctionComponent<SchedulesListProps> = (props)
         handleRowClick,
         handleResetSelected
     ] = logic.useTable();
+
+    const comparator = getComparator<D>(order, orderBy);
 
     return (
         <Box sx={{ width: '100%' }}>
@@ -72,9 +95,10 @@ export const SchedulesList:React.FunctionComponent<SchedulesListProps> = (props)
                             onSelectAllClick={handleSelectAllClick}
                             onRequestSort={handleRequestSort}
                             rowCount={rows.length}
+                            headCells={props.headCells}
                         />
                         <TableBody>
-                            {rows.slice().sort(getComparator(order, orderBy))
+                            {rows.slice().sort(comparator)
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((row, index) => {
                                     const isItemSelected = isSelected(row.name);
@@ -107,25 +131,42 @@ export const SchedulesList:React.FunctionComponent<SchedulesListProps> = (props)
                                                     }}
                                                 />
                                             </TableCell>
-                                            <TableCell
-                                                component="th"
-                                                id={labelId}
-                                                scope="row"
-                                                padding="none"
-                                            >
-                                                {row.name}
-                                            </TableCell>
-                                            <TableCell padding="checkbox">
-                                                <Checkbox
-                                                    color="primary"
-                                                    checked={(row.published === 1)}
-                                                    disabled={true}
-                                                    inputProps={{
-                                                        'aria-labelledby': labelId,
-                                                    }}
-                                                />
-                                            </TableCell>
-                                            {/*<TableCell align="left">{row.lastModified}</TableCell>*/}
+                                            {
+                                                (Object.keys(row) as Array<keyof typeof row>).map((
+                                                    key,
+                                                    index
+                                                ) => {
+                                                    return (
+                                                        (props.headCells[index].type === "boolean")
+                                                            ? (
+                                                                <TableCell
+                                                                    key={row.name + index}
+                                                                    padding="checkbox"
+                                                                >
+                                                                    <Checkbox
+                                                                        color="primary"
+                                                                        checked={(row[key] as unknown as string == "1")}
+                                                                        disabled={true}
+                                                                        inputProps={{
+                                                                            'aria-labelledby': labelId,
+                                                                        }}
+                                                                    />
+                                                                </TableCell>
+                                                            )
+                                                            : (
+                                                            <TableCell
+                                                                key={row.name + index}
+                                                                component="th"
+                                                                id={labelId}
+                                                                scope="row"
+                                                                padding="normal"
+                                                            >
+                                                                {row[key] as unknown as string}
+                                                            </TableCell>
+                                                        )
+                                                    );
+                                                })
+                                            }
                                         </TableRow>
                                     );
                                 })}

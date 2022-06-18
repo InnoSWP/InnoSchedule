@@ -1,6 +1,6 @@
 import { useState } from "react";
-import {addSchedule, removeSchedule, useAppDispatch, useAppSelector} from "store";
-import {createData} from "../../components/SchedulesList";
+import { addSchedule, removeSchedule, useAppDispatch, useAppSelector } from "store";
+import { createData } from "models/CoursesListData";
 
 
 export const useScheduleStorageLogic = () => {
