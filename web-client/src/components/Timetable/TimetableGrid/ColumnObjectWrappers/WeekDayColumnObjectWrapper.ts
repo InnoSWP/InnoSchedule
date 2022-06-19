@@ -1,4 +1,4 @@
-import { ColumnObjectWrapper } from "./ColumnObjectWrapper";
+import { ColumnObjectWrapper } from "components/Timetable/TimetableGrid/ColumnObjectWrappers/ColumnObjectWrapper";
 import { Weekday } from "models/Weekday"
 
 export class WeekDayColumnObjectWrapper extends ColumnObjectWrapper<Weekday>{

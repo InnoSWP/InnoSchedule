@@ -1,4 +1,4 @@
-@use "src/styles/colors";
+@use "../../../../styles/colors";
 
 .timetableHeaderCell {
   border: colors.$material-stroke 1px solid;
@@ -6,4 +6,6 @@
 
   padding-bottom: 8px;
   padding-top: 4px;
+
+  user-select: none;
 }

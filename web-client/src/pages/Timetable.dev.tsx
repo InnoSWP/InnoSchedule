@@ -1,8 +1,8 @@
 import React from 'react';
-import { Timetable } from "components/Timetable";
 import { DateTime, Interval } from "luxon";
 import { Weekday } from "models/Weekday";
-import { WeekDayColumnObjectWrapper } from "components/Timetable/ColumnObjectWrappers/WeekDayColumnObjectWrapper";
+import { WeekDayColumnObjectWrapper } from "components/Timetable/TimetableGrid/ColumnObjectWrappers/WeekDayColumnObjectWrapper";
+import { Timetable } from "components/Timetable/Timetable";
 
 
 function DevTimetable() {
