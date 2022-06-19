@@ -1,29 +1,28 @@
-import React from "react";
-import { Interval } from "luxon";
-import { useTimetableLogic } from "./Timetable.logic";
-import { TimetableRow } from "./TimetableRow";
-import { TimetableHeader } from "./TimetableHeader";
-import { ColumnObjectWrapper } from "components/Timetable/ColumnObjectWrappers/ColumnObjectWrapper";
-import styles from "./Timetable.module.scss";
+import React, { ForwardedRef, MutableRefObject, useEffect, useRef } from "react";
+import { useTimeslotsDisplayLogic } from "components/Timetable/Timetable.logic";
+import { TimetableGrid, TimetableGridProps } from "components/Timetable/TimetableGrid";
+import styles from "components/Timetable/Timetable.module.scss";
+import { TimeslotsLayer } from "components/Timetable/TimeslotsLayer";
 
-export interface TimetableProps {
-    workingHours  : Interval,
-    columnObjects : ColumnObjectWrapper<any>[],
+export interface TimetableProps extends TimetableGridProps {
+
 }
 
-export const Timetable : React.FunctionComponent<TimetableProps> = (props) => {
-    let logic = useTimetableLogic(props);
-    let intervals = logic.workingHoursToHalfHourIntervals();
+export const Timetable: React.FC<TimetableProps> = (props) => {
+    const logic = useTimeslotsDisplayLogic(props);
+    let ref = useRef<HTMLTableElement>() as MutableRefObject<HTMLTableElement>;
 
-    return <table className={styles["timetable"]}>
-        <TimetableHeader {...props}></TimetableHeader>
+    useEffect(() => {
+        logic.calculateTimetableDimensions(ref);
+    }, [props]);
 
-        <tbody>
-            { intervals.map(getTableRow.bind(this, props)) }
-        </tbody>
-    </table>
-}
-
-function getTableRow(props : TimetableProps, interval : Interval, index : number) {
-    return <TimetableRow key={index} interval={interval} {...props}></TimetableRow>
+    return (
+        <div className={styles["timetable"]}>
+            <TimetableGrid ref={ref} {...props}/>
+            <TimeslotsLayer
+                timetableDimensions={logic.timetableDimensions}
+                timetableInterval={props.workingHours}
+            />
+        </div>
+    );
 }

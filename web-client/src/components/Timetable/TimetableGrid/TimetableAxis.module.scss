@@ -1,4 +1,4 @@
-@use "src/styles/colors";
+@use "../../../styles/colors";
 
 .axisCell {
   width: 52px;
@@ -6,4 +6,6 @@
   vertical-align: top;
 
   color: #A7A7A7;
+
+  user-select: none;
 }
