@@ -24,6 +24,7 @@ export class ResourcesStore<T> {
      *
      * For example if you want to add Rooms actions call ("rooms", "Room", [])
      * resourceActions will be: addResourceRoom and removeResourceRoom
+     * to access resource you should use "state.{resourceName}.list"
      *
      * @param resourceName name for slice
      * @param actionPostfix will be added to name of the function
@@ -66,38 +67,3 @@ export class ResourcesStore<T> {
         this.resourceReducer = this.resourceSlice.reducer;
     }
 }
-
-
-
-
-// import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-// import { Teacher } from "models/Teacher";
-//
-// interface TeachersState {
-//     courses: Array<Teacher>;
-// }
-//
-// const initialState: TeachersState = {
-//     courses: [],
-// }
-//
-// interface addTeacherPayloadActionProps {
-//     teacherId: number;
-//     teacherToAdd: Teacher;
-// }
-//
-// export const teachersSlice = createSlice({
-//     name: 'teachers',
-//     initialState,
-//     reducers: {
-//         addTeacher: (state, action: PayloadAction<addTeacherPayloadActionProps>) => {
-//             state.courses[action.payload.teacherId] = action.payload.teacherToAdd;
-//         },
-//         removeTeacher: (state, action: PayloadAction<string>) => {
-//             state.courses = state.courses.filter((e, i) => e.name !== action.payload);
-//         }
-//     },
-// })
-//
-// export const { addTeacher, removeTeacher } = teachersSlice.actions;
-// export default teachersSlice.reducer;

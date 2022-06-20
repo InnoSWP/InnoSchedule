@@ -38,6 +38,7 @@ export interface DataTableProps<D extends BaseRow> {
         selected: readonly string[],
         resetSelect: (selected: readonly string[]) => void
     ) => void;
+    rowClickable?: boolean;
 
     columns: Array<keyof D>;
     rows: D[];
@@ -45,6 +46,21 @@ export interface DataTableProps<D extends BaseRow> {
     headCells: Array<TableColumn<D>>;
 }
 
+/**
+ * Creates a simple table
+ *
+ * @param props {
+ *     label: string - Label of the table
+ *     createNew: callback for pressing add button
+ *     removeItems: callback for pressing delete button
+ *
+ *     columns: columns in the table
+ *     rows: data to show
+ *
+ *     headCells: header cells
+ * }
+ * @constructor
+ */
 export const DataTable:React.FunctionComponent<any> = <D extends BaseRow>(
     props: DataTableProps<D> & { children?: ReactNode }
 ) => {
@@ -107,10 +123,10 @@ export const DataTable:React.FunctionComponent<any> = <D extends BaseRow>(
                                     return (
                                         <TableRow
                                             hover
-                                            sx={{cursor: "pointer"}}
+                                            sx={props.rowClickable ? {cursor: "pointer"} : null}
                                             onClick={(event) => {
                                                 event.stopPropagation();
-                                                handleRowClick(event, row.name);
+                                                if (props.rowClickable) handleRowClick(event, row.name);
                                             }}
                                             role="checkbox"
                                             aria-checked={isItemSelected}

@@ -52,7 +52,8 @@ export const ScheduleStorage:React.FunctionComponent = () => {
             createNew={handleCreateNew}
             removeItems={handleRemoveOpen}
             rows={rows}
-            headCells={columns} />
+            headCells={columns}
+            rowClickable />
 
         <FieldDialog
 

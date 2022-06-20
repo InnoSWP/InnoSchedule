@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Course } from "../models/Course";
+import { Course } from "models/Course";
 
 interface CoursesState {
     courses: Array<Course>;
