@@ -1,4 +1,8 @@
 .Field {
   display: flex;
   justify-content: end;
+
+  .text {
+    min-width: 40%;
+  }
 }

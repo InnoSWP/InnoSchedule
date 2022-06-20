@@ -3,18 +3,22 @@ import { useOutletContext } from "react-router-dom";
 
 export const useLayoutLogic = () => {
     return {
-        useLabel: ():[string, any] => { // TODO Make useLabel() => useHeader() with onClickCallback function
+        useHeader: ():[string, string, (label: string) => void, (link: string) => void] => {
 
             const [label, setLabel] = useState<string>("App name");
-            return [label, setLabel];
+            const [buttonLink, setButtonLink] = useState<string>("");
+            return [label, buttonLink, setLabel, setButtonLink];
         }
     }
 }
 
-export const useSetLabel = (label: string) => {
-    const setLabel = useOutletContext<CallableFunction>();
+export const useSetHeader = (label: string, buttonLink?: string) => {
+    const { setLabel, setButtonLink } = useOutletContext<any>();
+
+    if (buttonLink === undefined) buttonLink = "";
 
     useEffect(() => {
         setLabel(label);
+        setButtonLink(buttonLink);
     }, []);
 }

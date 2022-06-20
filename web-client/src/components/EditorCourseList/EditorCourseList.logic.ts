@@ -1,20 +1,33 @@
 import { EditorCourseListProps } from "./EditorCourseList";
 import { useState } from "react";
 
+interface DialogState {
+    isDialogOpened: boolean;
+    classId: number;
+}
 
 export const useEditorCourseListLogic = (props: EditorCourseListProps) => {
     return {
-        useDialog: ():[boolean, () => void, ()=> void] => {
-            const [isDialogOpened, setIsDialogOpened] = useState<boolean>(false);
+        useDialog: ():[DialogState, (id: number) => void, ()=> void] => {
+            const [dialogState, setDialogState] = useState<DialogState>({
+                isDialogOpened: false,
+                classId: 0
+            });
 
-            const handleOpen = () => {
-                setIsDialogOpened(true);
+            const handleOpen = (id: number) => {
+                setDialogState({
+                    isDialogOpened: true,
+                    classId: id
+                });
             }
             const handleClose = () => {
-                setIsDialogOpened(false);
+                setDialogState({
+                    isDialogOpened: false,
+                    classId: 0
+                });
             }
 
-            return [isDialogOpened, handleOpen, handleClose];
+            return [dialogState, handleOpen, handleClose];
         }
     }
 }

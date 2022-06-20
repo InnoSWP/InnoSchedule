@@ -1,4 +1,4 @@
-import {MultipleFieldsProps} from "./MultipleFields";
+import {FieldData, MultipleFieldsProps} from "./MultipleFields";
 import {ReactElement, useEffect, useState} from "react";
 import { Field } from "./Field";
 
@@ -18,28 +18,77 @@ export const useMultipleFieldsLogic = (props: MultipleFieldsProps) => {
                 });
             }
 
-            const addField = () => {
-
+            const getFieldId = (fieldsList: Array<ReactElement>) => {
                 let newFieldId = props.id + "-0";
                 if (fieldsList[fieldsList.length-1]) {
                     let splitPrevId = fieldsList[fieldsList.length-1].props.id.split("-");
                     let newIdNum = parseInt(splitPrevId[splitPrevId.length-1]) + 1;
 
                     newFieldId = props.id + "-" + newIdNum;
-
                 }
 
-                setFieldsList([...fieldsList,
-                    <Field id={newFieldId}
-                           key={newFieldId}
-                           onRemove={removeField}
-                           placeholder={props.placeholder}
-                           autoFocus />
-                ]);
+                return newFieldId;
+            }
+
+            const autofill = () => {
+                const autofillGroups: Array<ReactElement> = [];
+
+                props.autofill?.forEach((e) => {
+
+                    const newFieldId = getFieldId(autofillGroups);
+                    autofillGroups.push(
+                        <Field id={newFieldId}
+                               key={newFieldId}
+                               onRemove={removeField}
+                               placeholder={props.placeholder}
+                               autofill={e}
+                               type={props.type}
+                               variants={props.variants} />
+                    );
+                })
+                setFieldsList(autofillGroups);
+            }
+
+            const addField = (field?: FieldData) => {
+
+                setFieldsList((fieldsList) => {
+
+                    const newFieldId = getFieldId(fieldsList);
+
+                    return [
+                        ...fieldsList,
+                        <Field id={newFieldId}
+                               key={newFieldId}
+                               onRemove={removeField}
+                               placeholder={props.placeholder}
+                               autoFocus={props.autoFocus}
+                               autofill={field}
+                               type={props.type}
+                               variants={props.variants} />
+                    ]
+                });
             }
 
             useEffect(() => {
-                addField();
+                if (props.autofill) {
+                    autofill();
+                    return;
+                }
+
+                setFieldsList((fieldsList) => {
+
+                    const newFieldId = getFieldId(fieldsList);
+
+                    return [
+                        <Field id={newFieldId}
+                               key={newFieldId}
+                               onRemove={removeField}
+                               placeholder={props.placeholder}
+                               autoFocus={props.autoFocus}
+                               type={props.type}
+                               variants={props.variants} />
+                    ]
+                });
             }, []);
 
             return [fieldsList, addField];

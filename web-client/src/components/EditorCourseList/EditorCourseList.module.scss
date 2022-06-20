@@ -2,7 +2,7 @@
 
 .EditorCourseList {
   width: 216px;
-  height: calc(100vh - 64px - 40px);
+  height: calc(100vh - 64px - 48px);
 
   border-right: 1px solid colors.$material-stroke;
 
@@ -20,7 +20,7 @@
 
     border-bottom: 1px solid colors.$material-stroke;
 
-    height: 40px;
+    height: 48px;
     width: 100%;
 
     .button {

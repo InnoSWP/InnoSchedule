@@ -4,6 +4,8 @@
   display: flex;
   flex-direction: column;
 
+  min-width: 40%;
+
   .button {
     align-self: start;
   }

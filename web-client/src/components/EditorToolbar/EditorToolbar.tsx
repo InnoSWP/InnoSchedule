@@ -2,15 +2,13 @@ import React from "react";
 import styles from "./EditorToolbar.module.scss";
 import { Button, ButtonGroup, Divider } from "@mui/material";
 import { RangeSelector } from "../RangeSelector";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import DateRangeIcon from '@mui/icons-material/DateRange';
 import { RangeSelectorInterval } from "../RangeSelector/RangeSelectorInterval";
 
 export interface EditorToolbarProps {
 
 }
 
-export const EditorToolbar:React.FunctionComponent<EditorToolbarProps> = (props) => {
+export const EditorToolbar:React.FunctionComponent<EditorToolbarProps> = () => {
 
     return <div className={styles["EditorToolbar"]}>
         <ButtonGroup variant="outlined" aria-label="outlined button group">
@@ -24,7 +22,7 @@ export const EditorToolbar:React.FunctionComponent<EditorToolbarProps> = (props)
                        onChange={(e: RangeSelectorInterval) => {
                            console.log(e);
                        }}>
-            <AccessTimeIcon />
+            {/*<AccessTimeIcon />*/}
         </RangeSelector>
 
         <Divider variant="middle" orientation="vertical" flexItem />
@@ -33,12 +31,14 @@ export const EditorToolbar:React.FunctionComponent<EditorToolbarProps> = (props)
                        onChange={(e: RangeSelectorInterval) => {
                            console.log(e);
                        }}>
-            <DateRangeIcon />
+            {/*<DateRangeIcon />*/}
         </RangeSelector>
 
         <Divider variant="middle" orientation="vertical" flexItem />
 
-        <Button variant={"outlined"}>Save</Button>
-        <Button variant={"contained"}>Publish</Button>
+        <div className={styles["group"]}>
+            <Button variant={"outlined"}>Save</Button>
+            <Button variant={"contained"}>Publish</Button>
+        </div>
     </div>
 }

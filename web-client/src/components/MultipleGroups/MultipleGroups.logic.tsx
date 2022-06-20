@@ -4,7 +4,7 @@ import { Group } from "./Group";
 
 export const useMultipleGroupsLogic = (props: MultipleGroupsProps) => {
     return {
-        useMultipleGroups: ():[Array<JSX.Element>, () => void] => {
+        useMultipleGroups: ():[Array<ReactElement>, () => void] => {
 
             const [groupsList, setGroupsList] = useState<Array<ReactElement>>([]);
 
@@ -18,27 +18,79 @@ export const useMultipleGroupsLogic = (props: MultipleGroupsProps) => {
                 });
             }
 
-            const addGroup = () => {
+            const getGroupId = (groupsList: Array<ReactElement>) => {
 
                 let newGroupId = props.id + "-0";
                 if (groupsList[groupsList.length-1]) {
                     let splitPrevId = groupsList[groupsList.length-1].props.id.split("-");
                     let newIdNum = parseInt(splitPrevId[splitPrevId.length-1]) + 1;
-                    
+
                     newGroupId = props.id + "-" + newIdNum;
                 }
 
-                setGroupsList([...groupsList,
-                    <Group id={newGroupId}
-                           key={newGroupId}
-                           onRemove={removeGroup}
-                           placeholder={props.placeholder}
-                           autoFocus />
-                ]);
+                return newGroupId;
+            }
+
+            const autofill = () => {
+
+                const autofillGroups:Array<ReactElement> = [];
+
+                props.autofill?.forEach((e) => {
+
+                    const newGroupId = getGroupId(autofillGroups);
+
+                    autofillGroups.push(
+                        <Group id={newGroupId}
+                               key={newGroupId}
+                               onRemove={removeGroup}
+                               placeholder={props.placeholder}
+                               autofill={e}
+                               type={props.type}
+                               variants={props.variants} />
+                    );
+                })
+
+                setGroupsList(autofillGroups);
+            }
+
+            const addGroup = () => {
+                setGroupsList((groupsList) => {
+
+                    const newGroupId = getGroupId(groupsList);
+
+                    return [
+                        ...groupsList,
+                        <Group id={newGroupId}
+                               key={newGroupId}
+                               onRemove={removeGroup}
+                               placeholder={props.placeholder}
+                               autoFocus
+                               type={props.type}
+                               variants={props.variants} />
+                    ]
+                });
             }
 
             useEffect(() => {
-                addGroup();
+                if (props.autofill) {
+                    autofill();
+                    return;
+                }
+
+                setGroupsList((groupsList) => {
+
+                    const newGroupId = getGroupId(groupsList);
+
+                    return [
+                        <Group id={newGroupId}
+                               key={newGroupId}
+                               onRemove={removeGroup}
+                               placeholder={props.placeholder}
+                               autoFocus
+                               type={props.type}
+                               variants={props.variants} />
+                    ]
+                });
             }, []);
 
             return [groupsList, addGroup];

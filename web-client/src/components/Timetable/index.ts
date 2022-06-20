@@ -1,2 +1,2 @@
-export * from "./Timetable";
-export * from "./Timetable.logic";
+export * from "components/Timetable/Timetable.logic";
+export * from "components/Timetable/Timetable.logic";

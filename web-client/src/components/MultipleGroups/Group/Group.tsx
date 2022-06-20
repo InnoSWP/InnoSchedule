@@ -3,12 +3,17 @@ import styles from "./Group.module.scss";
 import { IconButton, TextField } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { MultipleFields } from "../../MultipleFields";
+import {GroupData} from "../MultipleGroups";
 
 interface GroupProps {
     id: string;
     placeholder: string;
     onRemove: (id: string) => void;
+    type: "text" | "select";
+
     autoFocus?: boolean;
+    autofill?: GroupData;
+    variants?: Array<string>;
 }
 
 export const Group:React.FunctionComponent<GroupProps> = (props) => {
@@ -21,13 +26,21 @@ export const Group:React.FunctionComponent<GroupProps> = (props) => {
             fullWidth
             variant="standard"
             placeholder={props.placeholder}
-        />
-        <MultipleFields  id={props.id + "-teachers"} placeholder={"Teacher"} label={"Teachers"} hideLabel={true} />
-        <IconButton color="primary"
+            defaultValue={props.autofill?.name} />
+
+        <MultipleFields  id={props.id + "-teachers"}
+                         placeholder={"Teacher"}
+                         label={"Teachers"}
+                         hideLabel={true}
+                         type={"select"}
+                         autofill={props.autofill?.group}
+                         variants={props.variants} />
+
+        <IconButton color="error"
                     className={styles["button"]}
-                   aria-label="delete"
-                   size="small"
-                   onClick={() => {props.onRemove(props.id)}}>
+                    aria-label="delete"
+                    size="small"
+                    onClick={() => {props.onRemove(props.id)}}>
             <DeleteIcon />
         </IconButton>
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import styles from "./AddCourseDialog.module.scss";
 import {
     Button,
@@ -10,50 +10,96 @@ import {
     Switch,
     TextField
 } from "@mui/material";
-import { MultipleGroups } from "../MultipleGroups";
+import {GroupData, MultipleGroups} from "../MultipleGroups";
+import { useAddCourseDialogLogic } from "./AddCourseDialog.logic";
+import { MultipleFields } from "../MultipleFields";
+import {useAppSelector} from "../../store";
 
-interface AddCourseDialogProps {
+export interface AddCourseDialogProps {
     open: boolean;
     onClose: () => void;
+    courseId: number;
+}
+
+export interface CourseData {
+    name: string;
+    acronym: string;
+    isDivision: boolean;
+
+    groups: Array<GroupData>;
 }
 
 export const AddCourseDialog:React.FunctionComponent<AddCourseDialogProps> = (props) => {
 
-    return <Dialog open={props.open} onClose={props.onClose} scroll={"paper"}>
+    const logic = useAddCourseDialogLogic(props);
+    const autofill = logic.useAutofill();
+    const [isDivision, setDivision] = useState<boolean>(false);
+
+
+    useEffect(() => {
+        if (autofill) setDivision(autofill.isDivision);
+        else setDivision(false);
+    }, [props]);
+
+    const teachers = useAppSelector((state) => state.teachers.list).map((element) => element.name);
+
+    return <Dialog open={props.open} scroll={"paper"} fullWidth> {/*onClose={props.onClose}*/}
         <DialogTitle>Add Course</DialogTitle>
         <DialogContent className={styles["AddCourseDialog"]}>
-            <FormGroup>
-                <div className={styles["name-acronym-container"]}>
-                    <TextField
-                        className={styles["name"]}
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        label="Course name"
-                        fullWidth
-                        variant="standard"
-                    />
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="acronym"
-                        label="Acronym"
-                        fullWidth
-                        variant="standard"
-                    />
-                </div>
+            <form id={"put-course"} onSubmit={logic.useForm()}>
+                <FormGroup>
+                    <div className={styles["name-acronym-container"]}>
+                        <TextField
+                            className={styles["name"]}
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            label="Course name"
+                            fullWidth
+                            variant="standard"
+                            defaultValue={autofill?.name}
+                        />
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="acronym"
+                            label="Acronym"
+                            fullWidth
+                            variant="standard"
+                            defaultValue={autofill?.acronym}
+                        />
+                    </div>
 
-                <div className={styles["teachers"]}>
-                    <FormControlLabel control={<Switch />} label="Division" />
-                    {/*{<MultipleFields id={"teacher"} label={"Teachers"} placeholder={"Teacher"} autoFocus />}*/}
-                    {<MultipleGroups id={"group"} label={"Groups"} placeholder={"Group"} autoFocus />}
-                </div>
+                    <div className={styles["teachers"]}>
+                        <FormControlLabel control={<Switch checked={isDivision}
+                                                           onClick={() => {
+                                                               setDivision((isDivision) => !isDivision);
+                                                           }} />}
+                                          label="Division" />
 
-            </FormGroup>
+                        { isDivision ?
+                            <MultipleGroups id={"group"}
+                                            label={"Groups"}
+                                            placeholder={"Group"}
+                                            type={"select"}
+                                            variants={teachers}
+                                            autoFocus
+                                            autofill={autofill?.groups} />
+                            :
+                            <MultipleFields id={"teacher"}
+                                            label={"Teachers"}
+                                            placeholder={"Teacher"}
+                                            type={"select"}
+                                            variants={teachers}
+                                            autoFocus
+                                            autofill={autofill?.groups[0].group} /> }
+                    </div>
+                </FormGroup>
+            </form>
         </DialogContent>
         <DialogActions>
             <Button onClick={props.onClose}>Cancel</Button>
-            <Button onClick={props.onClose}>Add</Button>
+            <Button type={"submit"} form={"put-course"} onClick={props.onClose}>Add</Button>
         </DialogActions>
     </Dialog>;
 }

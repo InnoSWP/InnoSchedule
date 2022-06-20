@@ -7,11 +7,11 @@ export const useRangeSelectorLogic = (props: RangeSelectorProps) => {
         onChangeCallback: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
 
             const textFields = event.
-                target.
-                parentElement?.
-                parentElement?.
-                parentElement?.
-                getElementsByClassName(
+                target
+                .parentElement
+                ?.parentElement
+                ?.parentElement
+                ?.getElementsByClassName(
                     "MuiInput-input MuiInputBase-input css-1x51dt5-MuiInputBase-input-MuiInput-input"
                 ) as HTMLCollectionOf<HTMLInputElement>;
 
