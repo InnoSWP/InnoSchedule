@@ -1,0 +1,19 @@
+@use "../../../styles/colors";
+
+.timetable {
+  border-collapse: collapse;
+  width: 100%;
+
+  table-layout: fixed;
+
+  tbody{
+    tr:nth-of-type(even) {
+      opacity: 0;
+      border-bottom: colors.$material-stroke 1px solid;
+    }
+
+    tr:nth-of-type(odd) {
+      border-bottom: colors.$material-stroke 1px dashed;
+    }
+  }
+}

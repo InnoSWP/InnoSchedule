@@ -1,12 +1,12 @@
 import React from "react";
-import { useTimetableRowLogic } from "components/Timetable/TimetableRow/TimetableRow.logic";
+import { useTimetableRowLogic } from "components/Timetable/TimetableGrid/TimetableRow/TimetableRow.logic";
 import { Interval } from "luxon";
-import { TimetableProps } from "components/Timetable/Timetable";
-import { ColumnObjectWrapper } from "components/Timetable/ColumnObjectWrappers/ColumnObjectWrapper";
-import axisStyles from "components/Timetable/TimetableAxis.module.scss";
-import styles from "./TimetableRow.module.scss";
+import { TimetableGridProps } from "components/Timetable/TimetableGrid/TimetableGrid";
+import { ColumnObjectWrapper } from "components/Timetable/TimetableGrid/ColumnObjectWrappers/ColumnObjectWrapper";
+import axisStyles from "components/Timetable/TimetableGrid/TimetableAxis.module.scss";
+import styles from "components/Timetable/TimetableGrid/TimetableRow/TimetableRow.module.scss";
 
-export interface TimetableRowProps extends TimetableProps {
+export interface TimetableRowProps extends TimetableGridProps {
     interval : Interval,
 }
 
