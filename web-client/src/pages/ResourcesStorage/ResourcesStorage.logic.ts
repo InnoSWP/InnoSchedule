@@ -7,8 +7,8 @@ import {
     useAppSelector
 } from "store";
 import { Room } from "models/Room";
-import {Teacher} from "../../models/Teacher";
-import {Activity} from "../../models/Activity";
+import { Teacher } from "models/Teacher";
+import { Activity } from "models/Activity";
 
 
 export const useResourcesStorageLogic = () => {

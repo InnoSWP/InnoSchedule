@@ -67,6 +67,7 @@ export const DataTable:React.FunctionComponent<any> = <D extends BaseRow>(
         handleRequestSort,
         handleChangePage,
         handleChangeRowsPerPage,
+        handleChangeDense,
         handleRowClick,
         handleResetSelected
     ] = logic.useTable();
