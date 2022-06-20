@@ -41,7 +41,9 @@ export const useMultipleFieldsLogic = (props: MultipleFieldsProps) => {
                                key={newFieldId}
                                onRemove={removeField}
                                placeholder={props.placeholder}
-                               autofill={e} />
+                               autofill={e}
+                               type={props.type}
+                               variants={props.variants} />
                     );
                 })
                 setFieldsList(autofillGroups);
@@ -60,7 +62,9 @@ export const useMultipleFieldsLogic = (props: MultipleFieldsProps) => {
                                onRemove={removeField}
                                placeholder={props.placeholder}
                                autoFocus={props.autoFocus}
-                               autofill={field} />
+                               autofill={field}
+                               type={props.type}
+                               variants={props.variants} />
                     ]
                 });
             }
@@ -71,7 +75,20 @@ export const useMultipleFieldsLogic = (props: MultipleFieldsProps) => {
                     return;
                 }
 
-                addField();
+                setFieldsList((fieldsList) => {
+
+                    const newFieldId = getFieldId(fieldsList);
+
+                    return [
+                        <Field id={newFieldId}
+                               key={newFieldId}
+                               onRemove={removeField}
+                               placeholder={props.placeholder}
+                               autoFocus={props.autoFocus}
+                               type={props.type}
+                               variants={props.variants} />
+                    ]
+                });
             }, []);
 
             return [fieldsList, addField];

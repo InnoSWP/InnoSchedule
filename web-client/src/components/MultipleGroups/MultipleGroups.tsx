@@ -9,9 +9,11 @@ export interface MultipleGroupsProps {
     id: string;
     label: string;
     placeholder: string;
+    type: "text" | "select";
 
     autoFocus?: boolean;
     autofill?: Array<GroupData>;
+    variants?: Array<string>;
 }
 
 export interface GroupData {

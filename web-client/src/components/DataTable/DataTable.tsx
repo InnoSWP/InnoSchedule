@@ -1,8 +1,8 @@
-// import styles from "./SchedulesList.module.scss";
+// import styles from "./DataTable.module.scss";
 import {
     getComparator,
-    useSchedulesListLogic
-} from "./SchedulesList.logic";
+    useDataTableLogic
+} from "./DataTable.logic";
 import React, {ReactNode} from 'react';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
@@ -13,8 +13,6 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
 import { EnhancedTableToolbar } from "./EnhancedTableToolbar";
 import { EnhancedTableHead } from "./EnhancedTableHead";
 
@@ -31,28 +29,29 @@ export interface TableColumn<D extends BaseRow> {
     type: "boolean" | "text" | "date" | "number";
 }
 
-export interface SchedulesListProps<D extends BaseRow> {
-   createNew: () => void;
-   removeItems: (
-       selected: readonly string[],
-       resetSelect: (selected: readonly string[]) => void
-   ) => void;
+export interface DataTableProps<D extends BaseRow> {
 
-   columns: Array<keyof D>;
-   rows: D[];
+    label: string;
 
-   headCells: Array<TableColumn<D>>;
+    createNew: () => void;
+    removeItems: (
+        selected: readonly string[],
+        resetSelect: (selected: readonly string[]) => void
+    ) => void;
+
+    columns: Array<keyof D>;
+    rows: D[];
+
+    headCells: Array<TableColumn<D>>;
 }
 
-export const SchedulesList:React.FunctionComponent<any> = <D extends BaseRow>(
-    props: SchedulesListProps<D> & { children?: ReactNode }
+export const DataTable:React.FunctionComponent<any> = <D extends BaseRow>(
+    props: DataTableProps<D> & { children?: ReactNode }
 ) => {
-
-    /*const rows = useAppSelector((state) => state.schedules.schedules);*/
 
     const rows = props.rows;
 
-    const logic = useSchedulesListLogic<D>(props);
+    const logic = useDataTableLogic<D>(props);
     const [
         selected,
         order,
@@ -68,7 +67,6 @@ export const SchedulesList:React.FunctionComponent<any> = <D extends BaseRow>(
         handleRequestSort,
         handleChangePage,
         handleChangeRowsPerPage,
-        handleChangeDense,
         handleRowClick,
         handleResetSelected
     ] = logic.useTable();
@@ -79,6 +77,7 @@ export const SchedulesList:React.FunctionComponent<any> = <D extends BaseRow>(
         <Box sx={{ width: '100%' }}>
             <Paper sx={{ width: '100%', mb: 2 }}>
                 <EnhancedTableToolbar selected={selected}
+                                      label={props.label}
                                       createNew={props.createNew}
                                       handleResetSelected={handleResetSelected}
                                       removeItems={props.removeItems}/>
@@ -192,10 +191,10 @@ export const SchedulesList:React.FunctionComponent<any> = <D extends BaseRow>(
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
             </Paper>
-            <FormControlLabel
-                control={<Switch checked={dense} onChange={handleChangeDense} />}
-                label="Dense padding"
-            />
+            {/*<FormControlLabel*/}
+            {/*    control={<Switch checked={dense} onChange={handleChangeDense} />}*/}
+            {/*    label="Dense padding"*/}
+            {/*/>*/}
         </Box>
     );
 }

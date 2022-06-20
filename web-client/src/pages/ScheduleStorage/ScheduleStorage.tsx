@@ -3,10 +3,12 @@ import styles from "./ScheduleStorage.module.scss";
 
 import { useSetHeader } from "../Layout";
 import { useScheduleStorageLogic } from "./ScheduleStorage.logic";
-import { SchedulesList } from "components/SchedulesList";
+import { DataTable } from "components/DataTable";
 import { FieldDialog } from "components/FieldDialog";
-import { ConfirmationDialog } from "../../components/ConfirmationDialog";
-import {useAppSelector} from "../../store";
+import { ConfirmationDialog } from "components/ConfirmationDialog";
+import { useAppSelector } from "store";
+import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export const ScheduleStorage:React.FunctionComponent = () => {
 
@@ -26,7 +28,7 @@ export const ScheduleStorage:React.FunctionComponent = () => {
         handleRemoveConfirm
     ] = logic.useRemoveScheduleDialog();
 
-    const rows = useAppSelector((state) => state.schedules.schedules);
+    const rows = useAppSelector((state) => state.schedules.list);
     const columns = [
         {
             id: "name",
@@ -45,11 +47,12 @@ export const ScheduleStorage:React.FunctionComponent = () => {
     ];
 
     return <div className={styles["ScheduleStorage"]}>
-        <SchedulesList
+        <DataTable
+            label={"Schedules"}
             createNew={handleCreateNew}
             removeItems={handleRemoveOpen}
             rows={rows}
-            headCells={columns}/>
+            headCells={columns} />
 
         <FieldDialog
 
@@ -72,5 +75,7 @@ export const ScheduleStorage:React.FunctionComponent = () => {
             open={isRemoveOpen}
             handleClose={handleRemoveClose}
             handleSubmit={handleRemoveConfirm}/>
+
+        <Link to={"/resources"}><Button>Resources</Button></Link>
     </div>;
 }

@@ -10,6 +10,7 @@ import { ScheduleEditor } from "./pages/ScheduleEditor";
 import store from "./store/store";
 import { Provider } from "react-redux";
 import { ScheduleStorage } from "./pages/ScheduleStorage";
+import { ResourcesStorage } from "./pages/ResourcesStorage";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -23,6 +24,7 @@ root.render(
                   <Route path={"/"} element={<Layout />}>
                       <Route index element={<App />} />
                       <Route path={"storage"} element={<ScheduleStorage />} />
+                      <Route path={"resources"} element={<ResourcesStorage />} />
                       <Route path={"editor/:id"} element={<ScheduleEditor />}>
                       </Route>
                       <Route path={"timetable"} element={<DevTimetable />} />

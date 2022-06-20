@@ -9,10 +9,12 @@ export interface MultipleFieldsProps {
     id: string;
     label: string;
     placeholder: string;
+    type: "text" | "select";
 
     autoFocus?: boolean;
     hideLabel?: boolean;
     autofill?: Array<FieldData>;
+    variants?: Array<string>;
 }
 
 export interface FieldData {

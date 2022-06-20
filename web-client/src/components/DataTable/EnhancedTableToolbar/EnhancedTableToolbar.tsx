@@ -8,6 +8,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from '@mui/icons-material/Add';
 
 interface EnhancedTableToolbarProps {
+    label: string;
     selected: readonly string[];
 
     createNew: () => void;
@@ -21,7 +22,7 @@ interface EnhancedTableToolbarProps {
 export const EnhancedTableToolbar:React.FunctionComponent<EnhancedTableToolbarProps> = (
     props
 ) => {
-    const { selected, createNew, handleResetSelected, removeItems } = props;
+    const { label, selected, createNew, handleResetSelected, removeItems } = props;
     const numSelected = selected.length;
 
     return (
@@ -51,7 +52,7 @@ export const EnhancedTableToolbar:React.FunctionComponent<EnhancedTableToolbarPr
                     id="tableTitle"
                     component="div"
                 >
-                    Schedules
+                    {label}
                 </Typography>
             )}
             {numSelected > 0 ? (

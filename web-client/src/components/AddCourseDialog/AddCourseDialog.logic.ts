@@ -30,18 +30,17 @@ export const useAddCourseDialogLogic = (props: AddCourseDialogProps) => {
                 const groups: Array<CourseGroup> = [];
                 switch (isDivision) {
                     case true:
-                        let c;
-                        for (let i = 3; i < formElements.length - 2; c = 0) {
+                        for (let i = 3; i < formElements.length - 2; ) {
                             const groupName = (formElements[i] as HTMLInputElement).value;
 
                             const splitGroupId = (formElements[i] as HTMLInputElement).id.split("-");
                             const groupId = splitGroupId[0] + "-" +  splitGroupId[1];
 
                             const teachers: Array<Teacher> = [];
-                            for (i = i+1; (formElements[i] as HTMLInputElement).id.startsWith(groupId); i=i+2) {
+                            for (i = i + 1; (formElements[i] as HTMLInputElement).id.startsWith(groupId); i=i+2) {
                                 teachers.push(new Teacher((formElements[i] as HTMLInputElement).value));
                             }
-                            i=i+2;
+                            i = i + 2;
 
                             groups.push(new CourseGroup(groupName, teachers));
                         }
@@ -64,7 +63,7 @@ export const useAddCourseDialogLogic = (props: AddCourseDialogProps) => {
             }
         },
 
-        useAutofill: ():CourseData => {
+        useAutofill: ():CourseData|undefined => {
 
             const course = courses[props.courseId];
 

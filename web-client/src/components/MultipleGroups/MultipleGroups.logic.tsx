@@ -44,7 +44,9 @@ export const useMultipleGroupsLogic = (props: MultipleGroupsProps) => {
                                key={newGroupId}
                                onRemove={removeGroup}
                                placeholder={props.placeholder}
-                               autofill={e} />
+                               autofill={e}
+                               type={props.type}
+                               variants={props.variants} />
                     );
                 })
 
@@ -62,7 +64,9 @@ export const useMultipleGroupsLogic = (props: MultipleGroupsProps) => {
                                key={newGroupId}
                                onRemove={removeGroup}
                                placeholder={props.placeholder}
-                               autoFocus />
+                               autoFocus
+                               type={props.type}
+                               variants={props.variants} />
                     ]
                 });
             }
@@ -70,10 +74,23 @@ export const useMultipleGroupsLogic = (props: MultipleGroupsProps) => {
             useEffect(() => {
                 if (props.autofill) {
                     autofill();
-                    return
+                    return;
                 }
 
-                addGroup();
+                setGroupsList((groupsList) => {
+
+                    const newGroupId = getGroupId(groupsList);
+
+                    return [
+                        <Group id={newGroupId}
+                               key={newGroupId}
+                               onRemove={removeGroup}
+                               placeholder={props.placeholder}
+                               autoFocus
+                               type={props.type}
+                               variants={props.variants} />
+                    ]
+                });
             }, []);
 
             return [groupsList, addGroup];

@@ -1,15 +1,14 @@
 import { useState } from "react";
-import { addSchedule, removeSchedule, useAppDispatch, useAppSelector } from "store";
-import { createData } from "models/CoursesListData";
-
+import { addResourceSchedule, removeResourceSchedule, useAppDispatch, useAppSelector} from "store";
+import { ScheduleForList } from "models/ScheduleForList";
 
 export const useScheduleStorageLogic = () => {
 
-    const schedules = useAppSelector((state) => state.schedules.schedules);
+    const schedules = useAppSelector((state) => state.schedules.list);
     const dispatch = useAppDispatch();
 
     return {
-        useAddScheduleDialog(): [
+        useAddScheduleDialog: function (): [
             open: boolean,
 
             handleOpen: () => void,
@@ -27,9 +26,9 @@ export const useScheduleStorageLogic = () => {
             }
 
             const submitForm = (nameToAdd: string) => {
-                dispatch(addSchedule({
-                    scheduleId: schedules.length,
-                    scheduleToAdd: createData(nameToAdd, schedules.length)
+                dispatch(addResourceSchedule({
+                    index: schedules.length,
+                    toAdd: new ScheduleForList(nameToAdd, 0)
                 }));
 
                 setOpen(false);
@@ -51,7 +50,9 @@ export const useScheduleStorageLogic = () => {
 
                 setHandleRemove(() => {return () => {
                     schedules.forEach((element) => {
-                        if (selected.includes(element.name)) dispatch(removeSchedule(element.name));
+                        if (selected.includes(element.name)) dispatch(removeResourceSchedule({
+                            toRemove: element
+                        }));
                     });
                     setSelected([]);
                 }})

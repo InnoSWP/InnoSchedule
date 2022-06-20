@@ -9,8 +9,11 @@ interface GroupProps {
     id: string;
     placeholder: string;
     onRemove: (id: string) => void;
+    type: "text" | "select";
+
     autoFocus?: boolean;
     autofill?: GroupData;
+    variants?: Array<string>;
 }
 
 export const Group:React.FunctionComponent<GroupProps> = (props) => {
@@ -23,13 +26,16 @@ export const Group:React.FunctionComponent<GroupProps> = (props) => {
             fullWidth
             variant="standard"
             placeholder={props.placeholder}
-            defaultValue={props.autofill?.name}
-        />
+            defaultValue={props.autofill?.name} />
+
         <MultipleFields  id={props.id + "-teachers"}
                          placeholder={"Teacher"}
                          label={"Teachers"}
                          hideLabel={true}
-                         autofill={props.autofill?.group} />
+                         type={"select"}
+                         autofill={props.autofill?.group}
+                         variants={props.variants} />
+
         <IconButton color="error"
                     className={styles["button"]}
                     aria-label="delete"

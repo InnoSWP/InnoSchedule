@@ -13,6 +13,7 @@ import {
 import {GroupData, MultipleGroups} from "../MultipleGroups";
 import { useAddCourseDialogLogic } from "./AddCourseDialog.logic";
 import { MultipleFields } from "../MultipleFields";
+import {useAppSelector} from "../../store";
 
 export interface AddCourseDialogProps {
     open: boolean;
@@ -31,12 +32,16 @@ export interface CourseData {
 export const AddCourseDialog:React.FunctionComponent<AddCourseDialogProps> = (props) => {
 
     const logic = useAddCourseDialogLogic(props);
-    const [isDivision, setDivision] = useState<boolean>(false);
     const autofill = logic.useAutofill();
+    const [isDivision, setDivision] = useState<boolean>(false);
+
 
     useEffect(() => {
-        setDivision(autofill.isDivision);
+        if (autofill) setDivision(autofill.isDivision);
+        else setDivision(false);
     }, [props]);
+
+    const teachers = useAppSelector((state) => state.teachers.list).map((element) => element.name);
 
     return <Dialog open={props.open} scroll={"paper"} fullWidth> {/*onClose={props.onClose}*/}
         <DialogTitle>Add Course</DialogTitle>
@@ -52,7 +57,7 @@ export const AddCourseDialog:React.FunctionComponent<AddCourseDialogProps> = (pr
                             label="Course name"
                             fullWidth
                             variant="standard"
-                            defaultValue={autofill.name}
+                            defaultValue={autofill?.name}
                         />
                         <TextField
                             autoFocus
@@ -61,7 +66,7 @@ export const AddCourseDialog:React.FunctionComponent<AddCourseDialogProps> = (pr
                             label="Acronym"
                             fullWidth
                             variant="standard"
-                            defaultValue={autofill.acronym}
+                            defaultValue={autofill?.acronym}
                         />
                     </div>
 
@@ -76,14 +81,18 @@ export const AddCourseDialog:React.FunctionComponent<AddCourseDialogProps> = (pr
                             <MultipleGroups id={"group"}
                                             label={"Groups"}
                                             placeholder={"Group"}
+                                            type={"select"}
+                                            variants={teachers}
                                             autoFocus
-                                            autofill={autofill.groups}/>
+                                            autofill={autofill?.groups} />
                             :
                             <MultipleFields id={"teacher"}
                                             label={"Teachers"}
                                             placeholder={"Teacher"}
+                                            type={"select"}
+                                            variants={teachers}
                                             autoFocus
-                                            autofill={autofill.groups[0].group}/> }
+                                            autofill={autofill?.groups[0].group} /> }
                     </div>
                 </FormGroup>
             </form>

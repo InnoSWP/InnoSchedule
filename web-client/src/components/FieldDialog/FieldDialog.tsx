@@ -29,16 +29,14 @@ export const FieldDialog: React.FunctionComponent<FieldDialogProps> = (props) =>
         fieldLabel,
         confirmButtonText,
         declineButtonText,
-        open,
-        handleClose,
-        handleSubmit
+        open
     } = props;
     const logic = useFieldDialogLogic(props);
 
-    const [name, onChange] = logic.useForm();
+    const [name, onChange, handleClose, handleSubmit] = logic.useForm();
 
     return (
-        <Dialog open={open} onClose={handleClose}>
+        <Dialog open={open}>
             <DialogTitle>{ label }</DialogTitle>
             <DialogContent>
                 <DialogContentText>
@@ -58,8 +56,8 @@ export const FieldDialog: React.FunctionComponent<FieldDialogProps> = (props) =>
                 />
             </DialogContent>
             <DialogActions>
-                <Button onClick={ () => {handleClose()} }>{declineButtonText}</Button>
-                <Button onClick={ () => {handleSubmit(name)} }>{confirmButtonText}</Button>
+                <Button onClick={ handleClose }>{ declineButtonText }</Button>
+                <Button onClick={ handleSubmit }>{ confirmButtonText }</Button>
             </DialogActions>
         </Dialog>
     );

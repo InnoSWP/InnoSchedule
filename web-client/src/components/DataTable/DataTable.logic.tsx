@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { BaseRow, SchedulesListProps } from "./SchedulesList";
+import { BaseRow, DataTableProps } from "./DataTable";
 
 
 
@@ -28,7 +28,7 @@ export function getComparator<D>(
         : (a, b) => -descendingComparator<D>(a, b, orderBy);
 }
 
-export const useSchedulesListLogic = <D extends BaseRow>(props: SchedulesListProps<D>) => {
+export const useDataTableLogic = <D extends BaseRow>(props: DataTableProps<D>) => {
 
     const rows = props.rows;
 

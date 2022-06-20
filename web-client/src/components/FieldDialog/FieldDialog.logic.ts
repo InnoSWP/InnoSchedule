@@ -7,7 +7,9 @@ export const useFieldDialogLogic = (props: FieldDialogProps) => {
     return {
        useForm: (): [
            name: string,
-           onChange: (event: ChangeEvent<HTMLInputElement>) => void
+           onChange: (event: ChangeEvent<HTMLInputElement>) => void,
+           onClose: () => void,
+           onSubmit: () => void
        ] => {
            const [name, setName] = useState<string>("");
 
@@ -15,7 +17,17 @@ export const useFieldDialogLogic = (props: FieldDialogProps) => {
                setName(event.target.value);
            }
 
-           return [name, onChange];
+           const onClose = () => {
+               props.handleClose();
+               setName("");
+           }
+
+           const onSubmit = () => {
+               props.handleSubmit(name);
+               setName("");
+           }
+
+           return [name, onChange, onClose, onSubmit];
        }
     }
 }
