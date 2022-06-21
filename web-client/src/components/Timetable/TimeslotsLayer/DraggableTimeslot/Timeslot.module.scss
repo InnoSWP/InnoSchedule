@@ -9,3 +9,10 @@
 
   cursor: pointer;
 }
+
+.shadow-timeslot {
+  @extend .timeslot;
+
+  opacity: 80%;
+
+}

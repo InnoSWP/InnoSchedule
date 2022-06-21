@@ -1,4 +1,4 @@
-import { TimeslotProps } from "components/Timetable/TimeslotsLayer/Timeslot/Timeslot";
+import { TimeslotProps } from "./Timeslot";
 import { Interval } from "luxon";
 
 export const useTimeslotLogic = (props: TimeslotProps) => {
@@ -12,8 +12,8 @@ export const useTimeslotLogic = (props: TimeslotProps) => {
                 left,
                 top,
 
-                width: props.timetableDimensions.columnWidth - 4 + "px",
-                height
+                width: props.timetableDimensions.columnWidth - 20 + "px",
+                height,
             }
         },
 
@@ -43,11 +43,11 @@ export const useTimeslotLogic = (props: TimeslotProps) => {
         },
 
         calculateIntervalSize(interval : Interval) {
-            let halfHourLength = props.timetableDimensions.halfHourLength;
+            let halfHourLength = props.timetableDimensions.rowHeight;
             let minutesInInterval = interval.length('minute');
             let borderOffset = Math.ceil(minutesInInterval / 30) / 10;
 
             return (halfHourLength * minutesInInterval) / 30 + borderOffset;
-        }
+        },
     }
 }
