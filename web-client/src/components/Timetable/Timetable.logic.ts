@@ -1,11 +1,15 @@
 import { TimetableProps } from "components/Timetable/Timetable";
 import { ForwardedRef, MutableRefObject, useMemo, useState } from "react";
+import { Interval } from "luxon";
 
-export type CoordinatePoint = { x : number, y : number }
 export type TimetableDimensions = {
-    pivot : CoordinatePoint,
-    halfHourLength : number,
+    pivot : { x : number, y : number },
+
     columnWidth : number,
+    columnsCount : number,
+
+    rowHeight : number,
+    rowsCount : number,
 };
 
 export const useTimeslotsDisplayLogic = (props: TimetableProps) => {
@@ -19,8 +23,10 @@ export const useTimeslotsDisplayLogic = (props: TimetableProps) => {
 
             setDimensions({
                 pivot,
-                halfHourLength: firstCell.offsetHeight,
+                rowHeight: firstCell.offsetHeight,
                 columnWidth: firstCell.offsetWidth,
+                columnsCount: props.columnObjects.length,
+                rowsCount: this.calculateRowsCount(),
             });
         },
 
@@ -33,7 +39,13 @@ export const useTimeslotsDisplayLogic = (props: TimetableProps) => {
         },
 
         calculatePivotLocation(cell: HTMLElement) {
-            return {x: cell.offsetLeft, y: cell.offsetTop};
+            let boundingRect = cell.getBoundingClientRect();
+            return {x: boundingRect.left, y: boundingRect.top};
+        },
+
+        calculateRowsCount() {
+            let minutesInInterval = props.workingHours.length('minute');
+            return Math.ceil(minutesInInterval / 30);
         },
     }
 }

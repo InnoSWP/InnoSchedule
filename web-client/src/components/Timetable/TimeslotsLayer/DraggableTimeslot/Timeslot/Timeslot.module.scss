@@ -1,0 +1,30 @@
+.timeslot {
+  position: absolute;
+
+  background-color: #3F51B5;
+  border-radius: 4px;
+
+  cursor: pointer;
+  touch-action: none;
+
+  padding: 8px;
+
+  font-size: 16px;
+  font-weight: 400;
+  color: white;
+
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+
+  user-select: none;
+
+  .discipline {
+    font-weight: 600;
+  }
+}
+
+.shadow-timeslot {
+  @extend .timeslot;
+  opacity: 0.5;
+}
