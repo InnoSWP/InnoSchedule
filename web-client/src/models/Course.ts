@@ -2,7 +2,7 @@ import { Teacher } from "./Teacher";
 
 export class CourseGroup {
     name: string;
-    teachers: Array<Teacher>;
+    teachers: Teacher[];
 
     constructor(name: string, teachers: Array<Teacher>) {
         this.name = name;

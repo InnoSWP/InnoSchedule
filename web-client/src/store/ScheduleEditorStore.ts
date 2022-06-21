@@ -1,12 +1,30 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Course } from "models/Course";
+import {Course, CourseGroup} from "models/Course";
+import { Teacher } from 'models/Teacher';
 
 interface CoursesState {
     courses: Array<Course>;
 }
 
 const initialState: CoursesState = {
-    courses: [],
+    courses: [
+        new Course(
+            "Physical culture and sport (Theoretical)",
+            "PC&S (Theoretical)",
+            false,
+            [
+                new CourseGroup(
+                    "default",
+                    [
+                        new Teacher(
+                            "Rabab Marouf",
+                            "ohwfuhwef"
+                        )
+                    ]
+                )
+            ]
+        )
+    ],
 }
 
 interface addCoursePayloadActionProps {

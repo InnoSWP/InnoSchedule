@@ -8,7 +8,7 @@ import DevTimetable from "../Timetable.dev";
 
 export const ScheduleEditor:React.FunctionComponent = () => {
 
-    useSetHeader("BS21", "/storage");
+    useSetHeader("B21 - Spring", "/storage");
 
     return <div className={styles["ScheduleEditor"]}>
         <EditorToolbar />
