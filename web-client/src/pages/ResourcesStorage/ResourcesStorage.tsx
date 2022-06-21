@@ -31,6 +31,14 @@ export const ResourcesStorage:React.FunctionComponent = () => {
     const teachersRows = useAppSelector((state) => state.teachers.list);
     const teachersColumns = [
         {
+            id: "uuid",
+            disablePadding: false,
+            numeric: false,
+            hidden: true,
+            label: "UUID",
+            type: "text"
+        },
+        {
             id: "name",
             disablePadding: false,
             numeric: false,
@@ -42,6 +50,14 @@ export const ResourcesStorage:React.FunctionComponent = () => {
     const roomsRows = useAppSelector((state) => state.rooms.list);
     const roomsColumns = [
         {
+            id: "uuid",
+            disablePadding: false,
+            numeric: false,
+            hidden: true,
+            label: "UUID",
+            type: "text"
+        },
+        {
             id: "name",
             disablePadding: false,
             numeric: false,
@@ -52,6 +68,14 @@ export const ResourcesStorage:React.FunctionComponent = () => {
 
     const activitiesRows = useAppSelector((state) => state.activities.list);
     const activitiesColumns = [
+        {
+            id: "uuid",
+            disablePadding: false,
+            numeric: false,
+            hidden: true,
+            label: "UUID",
+            type: "text"
+        },
         {
             id: "name",
             disablePadding: false,

@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { addResourceSchedule, removeResourceSchedule, useAppDispatch, useAppSelector} from "store";
-import { ScheduleForList } from "models/ScheduleForList";
+import { useAppSelector } from "store";
+import { useSchedules } from "../../hooks/useSchedules";
 
 export const useScheduleStorageLogic = () => {
 
     const schedules = useAppSelector((state) => state.schedules.list);
-    const dispatch = useAppDispatch();
+
+    const [updateSchedules, addSchedule, removeSchedule] = useSchedules();
 
     return {
         useAddScheduleDialog: function (): [
@@ -26,11 +27,7 @@ export const useScheduleStorageLogic = () => {
             }
 
             const submitForm = (nameToAdd: string) => {
-                dispatch(addResourceSchedule({
-                    index: schedules.length,
-                    toAdd: new ScheduleForList(nameToAdd, 0)
-                }));
-
+                addSchedule(nameToAdd);
                 setOpen(false);
             }
 
@@ -50,9 +47,9 @@ export const useScheduleStorageLogic = () => {
 
                 setHandleRemove(() => {return () => {
                     schedules.forEach((element) => {
-                        if (selected.includes(element.name)) dispatch(removeResourceSchedule({
-                            toRemove: element
-                        }));
+                        if (selected.includes(element.name)) {
+                            removeSchedule(element.uuid);
+                        }
                     });
                     setSelected([]);
                 }})

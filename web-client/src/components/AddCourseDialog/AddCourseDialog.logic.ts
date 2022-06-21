@@ -1,7 +1,7 @@
 import { Teacher } from "models/Teacher";
 import { FormEvent } from "react";
-import { CourseGroup, Course } from "../../models/Course";
-import {AddCourseDialogProps, CourseData} from "./AddCourseDialog";
+import { CourseGroup, Course } from "models/Course";
+import { AddCourseDialogProps, CourseData } from "./AddCourseDialog";
 import {
     addCourse,
     useAppDispatch,
@@ -13,6 +13,17 @@ export const useAddCourseDialogLogic = (props: AddCourseDialogProps) => {
 
     const dispatch = useAppDispatch();
     const courses = useAppSelector((state) => state.courses.courses);
+    const teachers = useAppSelector((state) => state.teachers.list);
+
+    const findTeacherByName = (name: string):Teacher => {
+
+        let found = new Teacher("undefined", "-1");
+        teachers.forEach((e) => {
+            if (e.name === name) found = e;
+        });
+
+        return found;
+    }
 
     return {
         useForm: () => {
@@ -38,7 +49,7 @@ export const useAddCourseDialogLogic = (props: AddCourseDialogProps) => {
 
                             const teachers: Array<Teacher> = [];
                             for (i = i + 1; (formElements[i] as HTMLInputElement).id.startsWith(groupId); i=i+2) {
-                                teachers.push(new Teacher((formElements[i] as HTMLInputElement).value));
+                                teachers.push(findTeacherByName((formElements[i] as HTMLInputElement).value));
                             }
                             i = i + 2;
 
@@ -48,7 +59,7 @@ export const useAddCourseDialogLogic = (props: AddCourseDialogProps) => {
                     case false:
                         const teachers: Array<Teacher> = [];
                         for (let i = 3; i < formElements.length - 2; i = i+2) {
-                            teachers.push(new Teacher((formElements[i] as HTMLInputElement).value));
+                            teachers.push(findTeacherByName((formElements[i] as HTMLInputElement).value));
                         }
 
                         groups.push(new CourseGroup("default group", teachers));

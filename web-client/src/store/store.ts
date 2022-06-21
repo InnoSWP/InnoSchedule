@@ -12,48 +12,27 @@ import { ScheduleForList } from "models/ScheduleForList";
 
 const roomsStore = new ResourcesStore<Room>(
     "rooms",
-    "Room",
-    [
-        new Room("107"),
-        new Room("108")
-    ]
+    "Room"
 );
-export const { addResourceRoom, removeResourceRoom } = roomsStore.resourceActions;
+export const { addResourceRoom, removeResourceRoom, updateResourceRoom } = roomsStore.resourceActions;
 
 const teachersStore = new ResourcesStore<Teacher>(
     "teachers",
-    "Teacher",
-    [
-        new Teacher("Rabab"),
-        new Teacher("Georgiy"),
-        new Teacher("Artem"),
-        new Teacher("Nursultan")
-    ]
+    "Teacher"
 );
-export const { addResourceTeacher, removeResourceTeacher } = teachersStore.resourceActions;
+export const { addResourceTeacher, removeResourceTeacher, updateResourceTeacher } = teachersStore.resourceActions;
 
-const activitiesStore = new ResourcesStore<Teacher>(
+const activitiesStore = new ResourcesStore<Activity>(
     "activities",
-    "Activity",
-    [
-        new Activity("Lab"),
-        new Activity("Tutorial"),
-        new Activity("Lecture")
-    ]
+    "Activity"
 );
-export const { addResourceActivity, removeResourceActivity } = activitiesStore.resourceActions;
+export const { addResourceActivity, removeResourceActivity, updateResourceActivity } = activitiesStore.resourceActions;
 
 const schedulesStore = new ResourcesStore<ScheduleForList>(
     "schedules",
-    "Schedule",
-    [
-        new ScheduleForList('BS21 - Spring', 1),
-        new ScheduleForList('BS22 - Summer', 0),
-        new ScheduleForList('MS21 - Spring I block', 1),
-        new ScheduleForList('MS21 - Spring II block', 1)
-    ]
+    "Schedule"
 )
-export const { addResourceSchedule, removeResourceSchedule } = schedulesStore.resourceActions;
+export const { addResourceSchedule, removeResourceSchedule, updateResourceSchedule } = schedulesStore.resourceActions;
 
 const store = configureStore({
     reducer: {
@@ -64,6 +43,9 @@ const store = configureStore({
         teachers: teachersStore.resourceReducer,
         activities: activitiesStore.resourceReducer
     },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+        serializableCheck: false
+    })
 });
 
 export default store;

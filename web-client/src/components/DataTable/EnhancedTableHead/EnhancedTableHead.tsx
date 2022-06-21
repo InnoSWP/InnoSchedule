@@ -18,23 +18,6 @@ interface EnhancedTableProps<D extends BaseRow> {
     headCells: readonly TableColumn<D>[];
 }
 
-// const headCells: readonly TableColumn<D>[] = [
-//     {
-//         id: 'name',
-//         numeric: false,
-//         type: "text",
-//         disablePadding: true,
-//         label: 'Module name',
-//     },
-//     {
-//         id: 'published',
-//         numeric: false,
-//         type: "boolean",
-//         disablePadding: false,
-//         label: 'Published',
-//     }
-// ];
-
 export const EnhancedTableHead: React.FunctionComponent<any> = <D extends BaseRow>(props: EnhancedTableProps<D>) => {
     const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort, headCells } =
         props;
@@ -57,27 +40,32 @@ export const EnhancedTableHead: React.FunctionComponent<any> = <D extends BaseRo
                         }}
                     />
                 </TableCell>
-                {headCells.map((headCell) => (
-                    <TableCell
-                        key={headCell.id}
-                        align={headCell.numeric ? 'right' : 'left'}
-                        padding={headCell.disablePadding ? 'none' : 'normal'}
-                        sortDirection={orderBy === headCell.id ? order : false}
-                    >
-                        <TableSortLabel
-                            active={orderBy === headCell.id}
-                            direction={orderBy === headCell.id ? order : 'asc'}
-                            onClick={createSortHandler(headCell.id)}
-                        >
-                            {headCell.label}
-                            {orderBy === headCell.id ? (
-                                <Box component="span" sx={visuallyHidden}>
-                                    {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                                </Box>
-                            ) : null}
-                        </TableSortLabel>
-                    </TableCell>
-                ))}
+                {
+                    headCells.map((headCell) =>
+                    {
+                        if (headCell.hidden) return null;
+
+                        return (
+                            <TableCell key={headCell.id}
+                                          align={headCell.numeric ? 'right' : 'left'}
+                                          padding={headCell.disablePadding ? 'none' : 'normal'}
+                                          sortDirection={orderBy === headCell.id ? order : false}
+                            >
+                                    <TableSortLabel active={orderBy === headCell.id}
+                                        direction={orderBy === headCell.id ? order : 'asc'}
+                                        onClick={createSortHandler(headCell.id)}
+                                    >
+                                        {headCell.label}
+                                        {orderBy === headCell.id ? (
+                                            <Box component="span" sx={visuallyHidden}>
+                                                {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                                            </Box>
+                                        ) : null}
+                                    </TableSortLabel>
+                            </TableCell>
+                        )
+                    })
+                }
             </TableRow>
         </TableHead>
     );

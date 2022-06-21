@@ -27,6 +27,8 @@ export interface TableColumn<D extends BaseRow> {
     numeric: boolean;
     label: string;
     type: "boolean" | "text" | "date" | "number";
+
+    hidden?: boolean;
 }
 
 export interface DataTableProps<D extends BaseRow> {
@@ -152,6 +154,9 @@ export const DataTable:React.FunctionComponent<any> = <D extends BaseRow>(
                                                     key,
                                                     index
                                                 ) => {
+                                                    if (!props.headCells[index]) return null;
+                                                    if (props.headCells[index].hidden) return null;
+
                                                     return (
                                                         (props.headCells[index].type === "boolean")
                                                             ? (

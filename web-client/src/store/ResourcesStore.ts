@@ -39,6 +39,7 @@ export class ResourcesStore<T> {
 
         const resourceAddName = "addResource" + actionPostfix;
         const resourceRemoveName = "removeResource" + actionPostfix;
+        const resourceUpdateName = "updateResource" + actionPostfix;
 
         this.resourceSlice = createSlice({
             name: this.resourceName,
@@ -59,6 +60,11 @@ export class ResourcesStore<T> {
                     toRemove: T
                 }>) => {
                     state.list = state.list.filter((e) => e !== action.payload.toRemove);
+                },
+                [resourceUpdateName]: (state, action: PayloadAction<{
+                    data: T[];
+                }>) => {
+                    (state.list as T[]) = action.payload.data;
                 }
             }
         });

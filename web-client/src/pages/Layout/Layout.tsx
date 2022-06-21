@@ -3,13 +3,15 @@ import styles from "./Layout.module.scss";
 import { useLayoutLogic } from "./Layout.logic";
 import { Link, Outlet } from "react-router-dom";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import {IconButton} from "@mui/material";
+import { IconButton } from "@mui/material";
+import {useInit} from "../../hooks/useInit";
 
 export const Layout:React.FunctionComponent = () => {
 
     const logic = useLayoutLogic();
-
     const [label, buttonLink, setLabel, setButtonLink] = logic.useHeader();
+
+    useInit();
 
     return <div className={styles["Layout"]}>
         <header className={styles["header"]}>

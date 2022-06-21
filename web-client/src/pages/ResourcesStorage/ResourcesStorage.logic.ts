@@ -1,20 +1,10 @@
 import { useState } from "react";
-import {
-    addResourceActivity,
-    addResourceRoom,
-    addResourceTeacher,
-    useAppDispatch,
-    useAppSelector
-} from "store";
-import { Room } from "models/Room";
-import { Teacher } from "models/Teacher";
-import { Activity } from "models/Activity";
+import { useTeachers } from "../../hooks/useTeachers";
+import {useRooms} from "../../hooks/useRooms";
+import { useActivities } from "hooks/useActivities";
 
 
 export const useResourcesStorageLogic = () => {
-
-    const schedules = useAppSelector((state) => state.schedules.list);
-    const dispatch = useAppDispatch();
 
     return {
         useAddDialog: function (): [
@@ -58,28 +48,26 @@ export const useResourcesStorageLogic = () => {
                 setOpen(false);
             }
 
+            const [updateTeachers, addTeacher] = useTeachers();
+            const [updateRooms, addRoom] = useRooms();
+            const [updateActivities, addActivity] = useActivities();
+
             const submitForm = (resourceName: "teachers" | "rooms" | "activities") => {
 
                 switch (resourceName) {
                     case "teachers":
                         return (nameToAdd: string) => {
-                            dispatch(addResourceTeacher({
-                                toAdd: new Teacher(nameToAdd)
-                            }));
+                            addTeacher(nameToAdd);
                             setOpen(false);
                         }
                     case "rooms":
                         return (nameToAdd: string) => {
-                            dispatch(addResourceRoom({
-                                toAdd: new Room(nameToAdd)
-                            }));
+                            addRoom(nameToAdd);
                             setOpen(false);
                         }
                     case "activities":
                         return (nameToAdd: string) => {
-                            dispatch(addResourceActivity({
-                                toAdd: new Activity(nameToAdd)
-                            }));
+                            addActivity(nameToAdd);
                             setOpen(false);
                         }
                 }

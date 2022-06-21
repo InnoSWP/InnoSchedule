@@ -31,19 +31,27 @@ export const ScheduleStorage:React.FunctionComponent = () => {
     const rows = useAppSelector((state) => state.schedules.list);
     const columns = [
         {
+            id: "uuid",
+            disablePadding: false,
+            numeric: false,
+            hidden: true,
+            label: "File Name",
+            type: "text"
+        },
+        {
             id: "name",
             disablePadding: false,
             numeric: false,
             label: "File Name",
             type: "text"
-        },
-        {
-            id: "published",
-            disablePadding: false,
-            numeric: false,
-            label: "Published",
-            type: "boolean"
         }
+        // {
+        //     id: "published",
+        //     disablePadding: false,
+        //     numeric: false,
+        //     label: "Published",
+        //     type: "boolean"
+        // }
     ];
 
     return <div className={styles["ScheduleStorage"]}>
@@ -65,7 +73,8 @@ export const ScheduleStorage:React.FunctionComponent = () => {
 
             open={isCreateNewOpen}
             handleClose={handleCreateNewClose}
-            handleSubmit={handleCreateNewSubmit}/>
+            handleSubmit={handleCreateNewSubmit} />
+
         <ConfirmationDialog
 
             label={"Do you want to remove items?"}
@@ -75,7 +84,7 @@ export const ScheduleStorage:React.FunctionComponent = () => {
 
             open={isRemoveOpen}
             handleClose={handleRemoveClose}
-            handleSubmit={handleRemoveConfirm}/>
+            handleSubmit={handleRemoveConfirm} />
 
         <Link to={"/resources"}><Button>Resources</Button></Link>
     </div>;
