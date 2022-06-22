@@ -16,7 +16,7 @@ class CourseViewSet(mixins.ListModelMixin,
                     PermissionsPolicyMixin,
                     GenericViewSet):
     queryset = CourseModel.objects.all()
-    permission_classes = [permissions.IsAdminUser]
+    # permission_classes = [permissions.IsAdminUser]
 
     def create(self, request, schedule_pk):
         serializer = self.get_serializer(data=request.data)
