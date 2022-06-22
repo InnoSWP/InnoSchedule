@@ -17,4 +17,4 @@ class RoomViewSet(mixins.ListModelMixin,
                   GenericViewSet):
     queryset = RoomModel.objects.all()
     serializer_class = RoomSerializer
-    permission_classes = [permissions.IsAdminUser]
+    # permission_classes = [permissions.IsAdminUser]

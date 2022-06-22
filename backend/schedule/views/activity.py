@@ -17,4 +17,4 @@ class ActivityViewSet(mixins.ListModelMixin,
                       GenericViewSet):
     queryset = ActivityModel.objects.all()
     serializer_class = ActivitySerializer
-    permission_classes = [permissions.IsAdminUser]
+    # permission_classes = [permissions.IsAdminUser]
