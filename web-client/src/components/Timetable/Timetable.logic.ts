@@ -3,7 +3,8 @@ import { ForwardedRef, MutableRefObject, useMemo, useState } from "react";
 import { Interval } from "luxon";
 
 export type TimetableDimensions = {
-    pivot : { x : number, y : number },
+    relativePivot : { x : number, y : number },
+    absolutePivot : { x : number, y : number },
 
     columnWidth : number,
     columnsCount : number,
@@ -19,10 +20,12 @@ export const useTimeslotsDisplayLogic = (props: TimetableProps) => {
         timetableDimensions : dimensions,
         calculateTimetableDimensions(ref: MutableRefObject<HTMLTableElement>) {
             let firstCell = this.getFirstTableCell(ref);
-            let pivot = this.calculatePivotLocation(firstCell!);
+            let relativePivot = this.calculateRelativePivot(firstCell!);
+            let absolutePivot = this.calculateAbsolutePivot(firstCell!);
 
             setDimensions({
-                pivot,
+                relativePivot,
+                absolutePivot,
                 rowHeight: firstCell.offsetHeight,
                 columnWidth: firstCell.offsetWidth,
                 columnsCount: props.columnObjects.length,
@@ -38,9 +41,13 @@ export const useTimeslotsDisplayLogic = (props: TimetableProps) => {
             ) as HTMLElement;
         },
 
-        calculatePivotLocation(cell: HTMLElement) {
-            let boundingRect = cell.getBoundingClientRect();
-            return {x: boundingRect.left, y: boundingRect.top};
+        calculateRelativePivot(cell: HTMLElement) {
+            return { x: cell.offsetLeft, y: cell.offsetTop };
+        },
+
+        calculateAbsolutePivot(cell: HTMLElement) {
+            let br = cell.getBoundingClientRect();
+            return { x: br.x, y: br.y };
         },
 
         calculateRowsCount() {

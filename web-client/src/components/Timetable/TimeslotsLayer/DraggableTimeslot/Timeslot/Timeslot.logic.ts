@@ -22,7 +22,7 @@ export const useTimeslotLogic = (props: TimeslotProps) => {
         },
 
         calculateHorizontalOffset() {
-            let pivotOffset  = props.timetableDimensions.pivot.x;
+            let pivotOffset  = props.timetableDimensions.relativePivot.x;
             let columnOffset = props.timetableDimensions.columnWidth * props.columnIndex;
             let borderOffset = (props.columnIndex - 1) / 2;
             let marginOffset = 2;
@@ -36,7 +36,7 @@ export const useTimeslotLogic = (props: TimeslotProps) => {
                 props.timeInterval.start,
             );
 
-            let pivotOffset = props.timetableDimensions.pivot.y;
+            let pivotOffset = props.timetableDimensions.relativePivot.y;
             let dayStartToTimeslotIntervalSize = this.calculateIntervalSize(dayStartToTimeslotInterval);
 
             return pivotOffset + dayStartToTimeslotIntervalSize;

@@ -23,7 +23,6 @@ export const useDraggableTimeslotLogic = (props: DraggableTimeslotProps) => {
                 {
                     onDrag: (eventData) => {
                         let { down,
-                            movement: [mx, my],
                             xy: [x, y],
                             first,
                             last,
@@ -51,23 +50,30 @@ export const useDraggableTimeslotLogic = (props: DraggableTimeslotProps) => {
             )();
         },
 
-            setShadowTimeslotParameters(x : number, y : number) {
-            let [nx, ny]   = this.normalizeDragCoordsToPivot(x, y);
+        setShadowTimeslotParameters(x : number, y : number) {
+            let [nrx, nry] = this.normalizeCoordsToRelativePivot(x, y);
+            let [nax, nay] = this.normalizeCoordsToAbsolutePivot(x, y);
 
-            if(this.dragInColumnBounds(nx, ny)) {
-                setShadowColumnIndex(this.getCurrentDragColumn(nx, ny));
+            if(this.dragInColumnBounds(nax, nay)) {
+                setShadowColumnIndex(this.getCurrentDragColumn(nax, nay));
             }
 
-            if(this.dragInRowBounds(nx, ny)) {
-                this.getCurrentDragTimeInterval(nx, ny);
-                // setShadowTimeInterval(this.getCurrentDragTimeInterval(nx, ny));
+            if(this.dragInRowBounds(nax, nay)) {
+                this.getCurrentDragTimeInterval(nax, nay);
             }
         },
 
-        normalizeDragCoordsToPivot(x : number, y : number) {
+        normalizeCoordsToRelativePivot(x : number, y : number) {
             return ([
-                x - props.timetableDimensions.pivot.x,
-                y - props.timetableDimensions.pivot.y
+                x - props.timetableDimensions.relativePivot.x,
+                y - props.timetableDimensions.relativePivot.y
+            ])
+        },
+
+        normalizeCoordsToAbsolutePivot(x : number, y : number) {
+            return ([
+                x - props.timetableDimensions.absolutePivot.x,
+                y - props.timetableDimensions.absolutePivot.y
             ])
         },
 
@@ -108,7 +114,7 @@ export const useDraggableTimeslotLogic = (props: DraggableTimeslotProps) => {
             let tableStartMs = props.timetableInterval.start.toMillis();
             let tableEndMs   = props.timetableInterval.end.toMillis();
 
-            let timeslotStartY = ny - 2 * relativeY;
+            let timeslotStartY = ny - relativeY;
 
             let newMillis = this.map(
                 timeslotStartY,
