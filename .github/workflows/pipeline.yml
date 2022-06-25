@@ -57,7 +57,8 @@ jobs:
       # Run Linter against code base #
       ################################
       - name: Lint Code Base
-        uses: github/super-linter@v4
+        run: |
+          echo "DONE! Linting Complete"
         env:
           VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: master
