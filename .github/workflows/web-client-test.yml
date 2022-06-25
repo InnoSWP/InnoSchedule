@@ -12,6 +12,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install modules
-      run: yarn
+      run: |
+        cd web-client
+        yarn
     - name: Run tests
       run: yarn run test
