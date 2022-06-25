@@ -1,16 +1,16 @@
 import { DraggableTimeslotProps } from "components/Timetable/TimeslotsLayer/DraggableTimeslot/DraggableTimeslot";
 import { DateTime, Interval } from "luxon";
-import { useSpring } from "react-spring";
-import { useDrag, useGesture } from "@use-gesture/react";
+import { CommonGestureState, EventTypes, SharedGestureState, useDrag, Vector2 } from "@use-gesture/react";
 import { useState } from "react";
-import { start } from "repl";
+import { map, roundTimeToFiveMinutes } from "utilities/Utilties";
+
+export type DragEventData = Omit<SharedGestureState & CommonGestureState & { axis: "x" | "y" | undefined; xy: Vector2 } & { _pointerId?: number; _pointerActive: boolean; _keyboardActive: boolean; _preventScroll: boolean; _delayed: boolean; canceled: boolean; cancel(): void; tap: boolean; swipe: Vector2 } & { event: EventTypes["drag"] }, "event"> & { event: EventTypes["drag"] };
 
 export const useDraggableTimeslotLogic = (props: DraggableTimeslotProps) => {
     const [shadowTimeInterval, setShadowTimeInterval] = useState(props.timeInterval);
     const [shadowColumnIndex, setShadowColumnIndex] = useState(props.columnIndex);
-    const [isDragging, setDragging] = useState(false);
 
-    const [relativeX, setRelativeX] = useState(0);
+    const [isDragging, setDragging] = useState(false);
     const [relativeY, setRelativeY] = useState(0);
 
     return {
@@ -19,55 +19,39 @@ export const useDraggableTimeslotLogic = (props: DraggableTimeslotProps) => {
         shadowColumnIndex,
 
         useTimeslotDragBind() {
-            return useGesture(
-                {
-                    onDrag: (eventData) => {
-                        let { down,
-                            xy: [x, y],
-                            first,
-                            last,
-                            currentTarget,
-                        } = eventData;
+            return useDrag((eventData) => {
+                let { down,
+                    xy: [x, y],
+                    first,
+                    last,
+                    currentTarget,
+                } = eventData;
 
-                        if(first) {
-                            let boundingRect = (currentTarget as HTMLElement).getBoundingClientRect();
-
-                            setRelativeX(x - boundingRect.left);
-                            setRelativeY(Math.floor(y - boundingRect.top));
-
-                            return;
-                        }
-
-                        if(last) {
-                            props.onDragReleaseCallback(shadowTimeInterval, shadowColumnIndex);
-                        }
-
-                        setDragging(down);
-
-                        this.setShadowTimeslotParameters(x, y);
-                    }
+                if(first) {
+                    let boundingRect = (currentTarget as HTMLElement).getBoundingClientRect();
+                    setRelativeY(Math.floor(y - boundingRect.top));
+                    return;
                 }
-            )();
+
+                if(last) {
+                    props.onDragReleaseCallback(shadowTimeInterval, shadowColumnIndex);
+                }
+
+                setDragging(down);
+                this.setShadowTimeslotParameters(x, y);
+            })();
         },
 
         setShadowTimeslotParameters(x : number, y : number) {
-            let [nrx, nry] = this.normalizeCoordsToRelativePivot(x, y);
             let [nax, nay] = this.normalizeCoordsToAbsolutePivot(x, y);
 
-            if(this.dragInColumnBounds(nax, nay)) {
-                setShadowColumnIndex(this.getCurrentDragColumn(nax, nay));
+            if(this.dragInColumnBounds(nax)) {
+                setShadowColumnIndex(this.getCurrentDragColumn(nax));
             }
 
-            if(this.dragInRowBounds(nax, nay)) {
-                this.getCurrentDragTimeInterval(nax, nay);
+            if(this.dragInRowBounds(nay)) {
+                setShadowTimeInterval(this.getCurrentDragTimeInterval(nay));
             }
-        },
-
-        normalizeCoordsToRelativePivot(x : number, y : number) {
-            return ([
-                x - props.timetableDimensions.relativePivot.x,
-                y - props.timetableDimensions.relativePivot.y
-            ])
         },
 
         normalizeCoordsToAbsolutePivot(x : number, y : number) {
@@ -77,7 +61,7 @@ export const useDraggableTimeslotLogic = (props: DraggableTimeslotProps) => {
             ])
         },
 
-        dragInColumnBounds(nx : number, ny : number) {
+        dragInColumnBounds(nx : number) {
             let td = props.timetableDimensions;
 
             let rawTableWidth = td.columnWidth * td.columnsCount;
@@ -88,7 +72,7 @@ export const useDraggableTimeslotLogic = (props: DraggableTimeslotProps) => {
             return 0 < nx && nx < totalWidth;
         },
 
-        dragInRowBounds(nx : number, ny : number) {
+        dragInRowBounds(ny : number) {
             return 0 < ny && ny < this.getTableHeight();
         },
 
@@ -101,7 +85,7 @@ export const useDraggableTimeslotLogic = (props: DraggableTimeslotProps) => {
             return rawTableHeight + borderOffset;
         },
 
-        getCurrentDragColumn(nx : number, ny : number) {
+        getCurrentDragColumn(nx : number) {
             let td = props.timetableDimensions;
 
             let possibleColumn = Math.ceil(nx / td.columnWidth) - 1;
@@ -110,46 +94,33 @@ export const useDraggableTimeslotLogic = (props: DraggableTimeslotProps) => {
             return Math.max(0, Math.min(possibleColumn, td.columnsCount - 1));
         },
 
-        getCurrentDragTimeInterval(nx : number, ny : number) {
+        getCurrentDragTimeInterval(ny : number) {
+            let exactStartTime = this.mapDragPositionToExactStartTime(ny);
+            let roundedStartTime = roundTimeToFiveMinutes(exactStartTime);
+
+            let intervalEndTime  = this.calculateIntervalEndTime(roundedStartTime);
+
+            return Interval.fromDateTimes(roundedStartTime, intervalEndTime);
+        },
+
+        mapDragPositionToExactStartTime(ny : number) {
             let tableStartMs = props.timetableInterval.start.toMillis();
             let tableEndMs   = props.timetableInterval.end.toMillis();
 
             let timeslotStartY = ny - relativeY;
 
-            let newMillis = this.map(
+            let newMillis = map(
                 timeslotStartY,
                 0, this.getTableHeight(),
                 tableStartMs, tableEndMs
             );
 
-            let intervalLength   = props.timeInterval.length("minutes");
-
-            let roundedStartTime = this.roundTimeToFiveMinutes(DateTime.fromMillis(newMillis));
-            let roundedEndTime   = roundedStartTime.plus({ minute : intervalLength});
-
-            console.log(roundedStartTime.toISOTime());
-
-            setShadowTimeInterval(Interval.fromDateTimes(roundedStartTime, roundedEndTime));
+            return DateTime.fromMillis(newMillis);
         },
 
-        map(
-            val : number,
-
-            in_min : number,
-            in_max : number,
-
-            out_min : number,
-            out_max : number
-        ) {
-            return (val - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-        },
-
-        roundTimeToFiveMinutes(time : DateTime) {
-            let roundedTime = time.startOf("minute");
-
-            const remainder = 5 - (time.minute % 5);
-
-            return roundedTime.plus({ minutes : remainder });
+        calculateIntervalEndTime(startTime : DateTime) {
+            let intervalLength = props.timeInterval.length("minutes");
+            return startTime.plus({ minute : intervalLength});
         }
     }
 }
