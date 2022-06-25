@@ -9,4 +9,4 @@ class TeacherSerializer(BulkSerializerMixin, ModelSerializer):
         model = TeacherModel
         list_serializer_class = BulkListSerializer
         update_lookup_field = "id"
-        fields = "__all__"
+        fields = ("id", "name")

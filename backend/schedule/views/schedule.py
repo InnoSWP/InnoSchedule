@@ -4,17 +4,17 @@ from rest_framework.viewsets import GenericViewSet
 from rest_framework_bulk import mixins as bulk_mixins
 
 from ._mixins import PermissionsPolicyMixin
-from ..models import ActivityModel
-from ..serializers import ActivitySerializer
+from ..models import ScheduleModel
+from ..serializers import ScheduleSerializer
 
 
-class ActivityViewSet(mixins.ListModelMixin,
+class ScheduleViewSet(mixins.ListModelMixin,
                       mixins.RetrieveModelMixin,
                       bulk_mixins.BulkCreateModelMixin,
                       mixins.UpdateModelMixin,
                       mixins.DestroyModelMixin,
                       PermissionsPolicyMixin,
                       GenericViewSet):
-    queryset = ActivityModel.objects.all()
-    serializer_class = ActivitySerializer
+    queryset = ScheduleModel.objects.all()
+    serializer_class = ScheduleSerializer
     # permission_classes = [permissions.IsAdminUser]

@@ -9,4 +9,4 @@ class ActivitySerializer(BulkSerializerMixin, ModelSerializer):
         model = ActivityModel
         list_serializer_class = BulkListSerializer
         update_lookup_field = "id"
-        fields = "__all__"
+        fields = ("id", "name")

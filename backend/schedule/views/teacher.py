@@ -17,4 +17,4 @@ class TeacherViewSet(mixins.ListModelMixin,
                      GenericViewSet):
     queryset = TeacherModel.objects.all()
     serializer_class = TeacherSerializer
-    permission_classes = [permissions.IsAdminUser]
+    # permission_classes = [permissions.IsAdminUser]
