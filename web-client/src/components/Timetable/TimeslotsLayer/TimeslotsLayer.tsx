@@ -11,7 +11,7 @@ export interface TimeslotsLayerProps {
 }
 
 export const TimeslotsLayer: React.FC<TimeslotsLayerProps> = (props) => {
-    let [time, setTime] = useState(
+    const [time, setTime] = useState(
         Interval.fromDateTimes(
             DateTime.fromObject({
                 hour: 11,
@@ -22,7 +22,7 @@ export const TimeslotsLayer: React.FC<TimeslotsLayerProps> = (props) => {
             })
         )
     );
-    let [column, setColumn] = useState(5);
+    const [column, setColumn] = useState(5);
 
     const logic = useTimeslotsLayerLogic(props);
 

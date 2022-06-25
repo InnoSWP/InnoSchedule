@@ -11,7 +11,7 @@ export const map = (val : number,
 };
 
 export const roundTimeToFiveMinutes = (time : DateTime) => {
-    let roundedTime = time.startOf("minute");
+    const roundedTime = time.startOf("minute");
 
     const remainder = 5 - (time.minute % 5);
 

@@ -13,8 +13,8 @@ export interface TimetableGridProps {
 
 export const TimetableGrid = React.forwardRef<HTMLTableElement, TimetableGridProps>(
     (props, ref) => {
-    let logic = useTimetableGridLogic(props);
-    let intervals = logic.workingHoursToHalfHourIntervals();
+    const logic = useTimetableGridLogic(props);
+    const intervals = logic.workingHoursToHalfHourIntervals();
 
     return <table ref={ref} className={styles["timetable"]}>
         <TimetableHeader {...props}></TimetableHeader>

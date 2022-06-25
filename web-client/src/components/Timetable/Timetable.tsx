@@ -4,13 +4,11 @@ import { TimetableGrid, TimetableGridProps } from "components/Timetable/Timetabl
 import styles from "components/Timetable/Timetable.module.scss";
 import { TimeslotsLayer } from "components/Timetable/TimeslotsLayer";
 
-export interface TimetableProps extends TimetableGridProps {
-
-}
+export type TimetableProps = TimetableGridProps
 
 export const Timetable: React.FC<TimetableProps> = (props) => {
     const logic = useTimeslotsDisplayLogic(props);
-    let ref = useRef<HTMLTableElement>() as MutableRefObject<HTMLTableElement>;
+    const ref = useRef<HTMLTableElement>() as MutableRefObject<HTMLTableElement>;
 
     useEffect(() => {
         logic.calculateTimetableDimensions(ref);

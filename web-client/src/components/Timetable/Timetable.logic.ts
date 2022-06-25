@@ -1,6 +1,5 @@
 import { TimetableProps } from "components/Timetable/Timetable";
-import { ForwardedRef, MutableRefObject, useMemo, useState } from "react";
-import { Interval } from "luxon";
+import { MutableRefObject, useState } from "react";
 
 export type TimetableDimensions = {
     relativePivot : { x : number, y : number },
@@ -14,14 +13,14 @@ export type TimetableDimensions = {
 };
 
 export const useTimeslotsDisplayLogic = (props: TimetableProps) => {
-    let [dimensions, setDimensions] = useState<TimetableDimensions | undefined>(undefined);
+    const [dimensions, setDimensions] = useState<TimetableDimensions | undefined>(undefined);
 
     return {
         timetableDimensions : dimensions,
         calculateTimetableDimensions(ref: MutableRefObject<HTMLTableElement>) {
-            let firstCell = this.getFirstTableCell(ref);
-            let relativePivot = this.calculateRelativePivot(firstCell!);
-            let absolutePivot = this.calculateAbsolutePivot(firstCell!);
+            const firstCell = this.getFirstTableCell(ref);
+            const relativePivot = this.calculateRelativePivot(firstCell!);
+            const absolutePivot = this.calculateAbsolutePivot(firstCell!);
 
             setDimensions({
                 relativePivot,
@@ -46,12 +45,12 @@ export const useTimeslotsDisplayLogic = (props: TimetableProps) => {
         },
 
         calculateAbsolutePivot(cell: HTMLElement) {
-            let br = cell.getBoundingClientRect();
+            const br = cell.getBoundingClientRect();
             return { x: br.x, y: br.y };
         },
 
         calculateRowsCount() {
-            let minutesInInterval = props.workingHours.length('minute');
+            const minutesInInterval = props.workingHours.length('minute');
             return Math.ceil(minutesInInterval / 30);
         },
     }

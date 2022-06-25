@@ -5,9 +5,7 @@ import { ColumnObjectWrapper } from "components/Timetable/TimetableGrid/ColumnOb
 import axisStyles from "components/Timetable/TimetableGrid/TimetableAxis.module.scss";
 import styles from "components/Timetable/TimetableGrid/TimetableHeader/TimetableHeader.module.scss";
 
-export interface TimetableHeaderProps extends TimetableGridProps {
-
-}
+export type TimetableHeaderProps = TimetableGridProps
 
 export const TimetableHeader: React.FunctionComponent<TimetableHeaderProps> = (props) => {
     const logic = useTimetableHeaderLogic(props);

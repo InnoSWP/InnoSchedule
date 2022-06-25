@@ -22,8 +22,8 @@ export const useMultipleGroupsLogic = (props: MultipleGroupsProps) => {
 
                 let newGroupId = props.id + "-0";
                 if (groupsList[groupsList.length-1]) {
-                    let splitPrevId = groupsList[groupsList.length-1].props.id.split("-");
-                    let newIdNum = parseInt(splitPrevId[splitPrevId.length-1]) + 1;
+                    const splitPrevId = groupsList[groupsList.length-1].props.id.split("-");
+                    const newIdNum = parseInt(splitPrevId[splitPrevId.length-1]) + 1;
 
                     newGroupId = props.id + "-" + newIdNum;
                 }

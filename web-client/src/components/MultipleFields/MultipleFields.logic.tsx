@@ -21,8 +21,8 @@ export const useMultipleFieldsLogic = (props: MultipleFieldsProps) => {
             const getFieldId = (fieldsList: Array<ReactElement>) => {
                 let newFieldId = props.id + "-0";
                 if (fieldsList[fieldsList.length-1]) {
-                    let splitPrevId = fieldsList[fieldsList.length-1].props.id.split("-");
-                    let newIdNum = parseInt(splitPrevId[splitPrevId.length-1]) + 1;
+                    const splitPrevId = fieldsList[fieldsList.length-1].props.id.split("-");
+                    const newIdNum = parseInt(splitPrevId[splitPrevId.length-1]) + 1;
 
                     newFieldId = props.id + "-" + newIdNum;
                 }

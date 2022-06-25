@@ -20,7 +20,7 @@ export const useDraggableTimeslotLogic = (props: DraggableTimeslotProps) => {
 
         useTimeslotDragBind() {
             return useDrag((eventData) => {
-                let { down,
+                const { down,
                     xy: [x, y],
                     first,
                     last,
@@ -28,7 +28,7 @@ export const useDraggableTimeslotLogic = (props: DraggableTimeslotProps) => {
                 } = eventData;
 
                 if(first) {
-                    let boundingRect = (currentTarget as HTMLElement).getBoundingClientRect();
+                    const boundingRect = (currentTarget as HTMLElement).getBoundingClientRect();
                     setRelativeY(Math.floor(y - boundingRect.top));
                     return;
                 }
@@ -43,7 +43,7 @@ export const useDraggableTimeslotLogic = (props: DraggableTimeslotProps) => {
         },
 
         setShadowTimeslotParameters(x : number, y : number) {
-            let [nax, nay] = this.normalizeCoordsToAbsolutePivot(x, y);
+            const [nax, nay] = this.normalizeCoordsToAbsolutePivot(x, y);
 
             if(this.dragInColumnBounds(nax)) {
                 setShadowColumnIndex(this.getCurrentDragColumn(nax));
@@ -62,12 +62,12 @@ export const useDraggableTimeslotLogic = (props: DraggableTimeslotProps) => {
         },
 
         dragInColumnBounds(nx : number) {
-            let td = props.timetableDimensions;
+            const td = props.timetableDimensions;
 
-            let rawTableWidth = td.columnWidth * td.columnsCount;
-            let borderOffset = (td.columnsCount - 1) / 2;
+            const rawTableWidth = td.columnWidth * td.columnsCount;
+            const borderOffset = (td.columnsCount - 1) / 2;
 
-            let totalWidth = rawTableWidth + borderOffset;
+            const totalWidth = rawTableWidth + borderOffset;
 
             return 0 < nx && nx < totalWidth;
         },
@@ -77,39 +77,39 @@ export const useDraggableTimeslotLogic = (props: DraggableTimeslotProps) => {
         },
 
         getTableHeight() {
-            let td = props.timetableDimensions;
+            const td = props.timetableDimensions;
 
-            let rawTableHeight = td.rowHeight * td.rowsCount;
-            let borderOffset   = td.rowsCount / 10;
+            const rawTableHeight = td.rowHeight * td.rowsCount;
+            const borderOffset   = td.rowsCount / 10;
 
             return rawTableHeight + borderOffset;
         },
 
         getCurrentDragColumn(nx : number) {
-            let td = props.timetableDimensions;
+            const td = props.timetableDimensions;
 
-            let possibleColumn = Math.ceil(nx / td.columnWidth) - 1;
+            const possibleColumn = Math.ceil(nx / td.columnWidth) - 1;
 
             // Clamping value to [0, td.columnsCount - 1]
             return Math.max(0, Math.min(possibleColumn, td.columnsCount - 1));
         },
 
         getCurrentDragTimeInterval(ny : number) {
-            let exactStartTime = this.mapDragPositionToExactStartTime(ny);
-            let roundedStartTime = roundTimeToFiveMinutes(exactStartTime);
+            const exactStartTime = this.mapDragPositionToExactStartTime(ny);
+            const roundedStartTime = roundTimeToFiveMinutes(exactStartTime);
 
-            let intervalEndTime  = this.calculateIntervalEndTime(roundedStartTime);
+            const intervalEndTime  = this.calculateIntervalEndTime(roundedStartTime);
 
             return Interval.fromDateTimes(roundedStartTime, intervalEndTime);
         },
 
         mapDragPositionToExactStartTime(ny : number) {
-            let tableStartMs = props.timetableInterval.start.toMillis();
-            let tableEndMs   = props.timetableInterval.end.toMillis();
+            const tableStartMs = props.timetableInterval.start.toMillis();
+            const tableEndMs   = props.timetableInterval.end.toMillis();
 
-            let timeslotStartY = ny - relativeY;
+            const timeslotStartY = ny - relativeY;
 
-            let newMillis = map(
+            const newMillis = map(
                 timeslotStartY,
                 0, this.getTableHeight(),
                 tableStartMs, tableEndMs
@@ -119,7 +119,7 @@ export const useDraggableTimeslotLogic = (props: DraggableTimeslotProps) => {
         },
 
         calculateIntervalEndTime(startTime : DateTime) {
-            let intervalLength = props.timeInterval.length("minutes");
+            const intervalLength = props.timeInterval.length("minutes");
             return startTime.plus({ minute : intervalLength});
         }
     }

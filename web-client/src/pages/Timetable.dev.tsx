@@ -7,7 +7,7 @@ import { Timetable } from "components/Timetable/Timetable";
 
 function DevTimetable() {
 
-    let workingHours = Interval.fromDateTimes(
+    const workingHours = Interval.fromDateTimes(
         DateTime.fromObject({
             hour: 9,
         }),
@@ -16,7 +16,7 @@ function DevTimetable() {
         })
     );
 
-    let columnObjectWrappers = Object.values(Weekday)
+    const columnObjectWrappers = Object.values(Weekday)
         .filter((weekdayOrString) => typeof weekdayOrString !== "string")
         .map((weekday) => {
             return new WeekDayColumnObjectWrapper(weekday as Weekday);

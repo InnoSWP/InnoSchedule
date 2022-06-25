@@ -2,13 +2,12 @@ import React from "react";
 import { useLoginPageLogic } from "./LoginPage.logic";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import TextField from "@mui/material/TextField";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
-import {FormControl, IconButton, Input, InputAdornment, InputLabel} from "@mui/material";
+import {IconButton, InputAdornment} from "@mui/material";
 
 export const LoginPage:React.FunctionComponent = () => {
 
