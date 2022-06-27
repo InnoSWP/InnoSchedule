@@ -19,8 +19,8 @@ export const useTimeslotsDisplayLogic = (props: TimetableProps) => {
         timetableDimensions : dimensions,
         calculateTimetableDimensions(ref: MutableRefObject<HTMLTableElement>) {
             const firstCell = this.getFirstTableCell(ref);
-            const relativePivot = this.calculateRelativePivot(firstCell!);
-            const absolutePivot = this.calculateAbsolutePivot(firstCell!);
+            const relativePivot = this.calculateRelativePivotLocation(firstCell!);
+            const absolutePivot = this.calculateAbsolutePivotLocation(firstCell!);
 
             setDimensions({
                 absolutePivot,
