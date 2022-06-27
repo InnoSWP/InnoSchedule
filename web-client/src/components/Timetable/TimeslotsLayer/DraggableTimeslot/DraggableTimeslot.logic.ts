@@ -2,7 +2,7 @@ import { DraggableTimeslotProps } from "components/Timetable/TimeslotsLayer/Drag
 import { DateTime, Interval } from "luxon";
 import { CommonGestureState, EventTypes, SharedGestureState, useDrag, Vector2 } from "@use-gesture/react";
 import { useState } from "react";
-import { map, roundTimeToFiveMinutes } from "utilities/Utilties";
+import { clampInterval, map, roundTimeToFiveMinutes } from "utilities/Utilties";
 
 export type DragEventData = Omit<SharedGestureState & CommonGestureState & { axis: "x" | "y" | undefined; xy: Vector2 } & { _pointerId?: number; _pointerActive: boolean; _keyboardActive: boolean; _preventScroll: boolean; _delayed: boolean; canceled: boolean; cancel(): void; tap: boolean; swipe: Vector2 } & { event: EventTypes["drag"] }, "event"> & { event: EventTypes["drag"] };
 
@@ -55,9 +55,12 @@ export const useDraggableTimeslotLogic = (props: DraggableTimeslotProps) => {
         },
 
         normalizeCoordsToAbsolutePivot(x : number, y : number) {
+            let scrollLeftOffset = window.document.documentElement.scrollLeft;
+            let scrollTopOffset  = window.document.documentElement.scrollTop;
+
             return ([
-                x - props.timetableDimensions.absolutePivot.x,
-                y - props.timetableDimensions.absolutePivot.y
+                x - props.timetableDimensions.absolutePivot.x + scrollLeftOffset,
+                y - props.timetableDimensions.absolutePivot.y + scrollTopOffset,
             ])
         },
 
@@ -100,7 +103,11 @@ export const useDraggableTimeslotLogic = (props: DraggableTimeslotProps) => {
 
             const intervalEndTime  = this.calculateIntervalEndTime(roundedStartTime);
 
-            return Interval.fromDateTimes(roundedStartTime, intervalEndTime);
+            const dragInterval = Interval.fromDateTimes(roundedStartTime, intervalEndTime);
+
+            // logInterval(clampInterval(dragInterval, props.timetableInterval));
+
+            return clampInterval(dragInterval, props.timetableInterval);
         },
 
         mapDragPositionToExactStartTime(ny : number) {
