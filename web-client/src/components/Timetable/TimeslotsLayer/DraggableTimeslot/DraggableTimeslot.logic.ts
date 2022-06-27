@@ -66,8 +66,8 @@ export const useDraggableTimeslotLogic = (props: DraggableTimeslotProps) => {
 
         normalizeDragCoordsToPivot(x : number, y : number) {
             return ([
-                x - props.timetableDimensions.pivot.x,
-                y - props.timetableDimensions.pivot.y
+                x - props.timetableDimensions.absolutePivot.x,
+                y - props.timetableDimensions.absolutePivot.y
             ])
         },
 
@@ -120,8 +120,6 @@ export const useDraggableTimeslotLogic = (props: DraggableTimeslotProps) => {
 
             let roundedStartTime = this.roundTimeToFiveMinutes(DateTime.fromMillis(newMillis));
             let roundedEndTime   = roundedStartTime.plus({ minute : intervalLength});
-
-            console.log(roundedStartTime.toISOTime());
 
             setShadowTimeInterval(Interval.fromDateTimes(roundedStartTime, roundedEndTime));
         },
