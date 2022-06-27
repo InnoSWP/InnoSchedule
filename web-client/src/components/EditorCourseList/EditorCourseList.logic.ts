@@ -1,33 +1,52 @@
 import { EditorCourseListProps } from "./EditorCourseList";
 import { useState } from "react";
+import {Course} from "../../models/Course";
 
 interface DialogState {
     isDialogOpened: boolean;
-    classId: number;
+    courseUuid?: string;
+    addCourse: (course: Course) => void;
 }
 
 export const useEditorCourseListLogic = (props: EditorCourseListProps) => {
     return {
-        useDialog: ():[DialogState, (id: number) => void, ()=> void] => {
+
+        useCoursesDialog: ():[
+            courses: Course[],
+            dialogState: DialogState,
+            handleOpen: (id?: string) => void,
+            handleClose: ()=> void,
+            removeCourse: (uuid: string) => void
+        ] => {
+            const { courses, addCourse, removeCourse } = props;
             const [dialogState, setDialogState] = useState<DialogState>({
                 isDialogOpened: false,
-                classId: 0
+                courseUuid: "",
+                addCourse
             });
 
-            const handleOpen = (id: number) => {
+            const handleOpen = (id?: string) => {
                 setDialogState({
                     isDialogOpened: true,
-                    classId: id
+                    courseUuid: id,
+                    addCourse
                 });
             }
             const handleClose = () => {
                 setDialogState({
                     isDialogOpened: false,
-                    classId: 0
+                    courseUuid: "",
+                    addCourse
                 });
             }
 
-            return [dialogState, handleOpen, handleClose];
+            return [
+                courses,
+                dialogState,
+                handleOpen,
+                handleClose,
+                removeCourse
+            ];
         }
     }
 }

@@ -18,6 +18,7 @@ import { EnhancedTableHead } from "./EnhancedTableHead";
 
 export interface BaseRow {
     id: number;
+    uuid: string;
     name: string;
 }
 
@@ -85,7 +86,6 @@ export const DataTable:React.FunctionComponent<any> = <D extends BaseRow>(
         handleRequestSort,
         handleChangePage,
         handleChangeRowsPerPage,
-        handleChangeDense,
         handleRowClick,
         handleResetSelected
     ] = logic.useTable();
@@ -127,7 +127,6 @@ export const DataTable:React.FunctionComponent<any> = <D extends BaseRow>(
                                             hover
                                             sx={props.rowClickable ? {cursor: "pointer"} : null}
                                             onClick={(event) => {
-                                                event.stopPropagation();
                                                 if (props.rowClickable) handleRowClick(event, row.name);
                                             }}
                                             role="checkbox"

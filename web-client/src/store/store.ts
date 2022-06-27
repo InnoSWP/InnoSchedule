@@ -1,5 +1,4 @@
 import { configureStore } from '@reduxjs/toolkit'
-import coursesReducer from "./ScheduleEditorStore";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { ResourcesStore } from "./ResourcesStore";
 
@@ -36,7 +35,7 @@ export const { addResourceSchedule, removeResourceSchedule, updateResourceSchedu
 
 const store = configureStore({
     reducer: {
-        courses: coursesReducer,
+        // courses: coursesReducer,
         schedules: schedulesStore.resourceReducer,
 
         rooms: roomsStore.resourceReducer,

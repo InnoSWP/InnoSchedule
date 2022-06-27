@@ -1,6 +1,7 @@
 import { Teacher } from "./Teacher";
 
 export class CourseGroup {
+
     name: string;
     teachers: Teacher[];
 
@@ -11,12 +12,15 @@ export class CourseGroup {
 }
 
 export class Course {
+
+    uuid: string;
     name: string;
     acronym: string;
     isDivision: boolean;
     groups: Array<CourseGroup>;
 
-    constructor(name: string, acronym:string, isDivision: boolean, groups: Array<CourseGroup>) {
+    constructor(name: string, acronym:string, isDivision: boolean, groups: Array<CourseGroup>, uuid: string) {
+        this.uuid = uuid;
         this.name = name;
         this.acronym = acronym;
         this.isDivision = isDivision;

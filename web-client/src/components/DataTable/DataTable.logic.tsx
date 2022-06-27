@@ -48,7 +48,6 @@ export const useDataTableLogic = <D extends BaseRow>(props: DataTableProps<D>) =
             handleRequestSort: (event: React.MouseEvent<unknown>, property: keyof D) => void,
             handleChangePage: (event: unknown, newPage: number) => void,
             handleChangeRowsPerPage: (event: React.ChangeEvent<HTMLInputElement>) => void,
-            handleChangeDense: (event: React.ChangeEvent<HTMLInputElement>) => void,
             handleRowClick: (event: React.MouseEvent<unknown>, name: string) => void,
             handleResetSelect: () => void
         ] => {
@@ -57,7 +56,7 @@ export const useDataTableLogic = <D extends BaseRow>(props: DataTableProps<D>) =
             const [orderBy, setOrderBy] = React.useState<keyof D>("name");
             const [selected, setSelected] = React.useState<readonly string[]>([]);
             const [page, setPage] = React.useState(0);
-            const [dense, setDense] = React.useState(false);
+            const [dense] = React.useState(false);
             const [rowsPerPage, setRowsPerPage] = React.useState(5);
             const navigate = useNavigate();
 
@@ -108,9 +107,9 @@ export const useDataTableLogic = <D extends BaseRow>(props: DataTableProps<D>) =
                 setPage(0);
             };
 
-            const handleChangeDense = (event: React.ChangeEvent<HTMLInputElement>) => {
-                setDense(event.target.checked);
-            };
+            // const handleChangeDense = (event: React.ChangeEvent<HTMLInputElement>) => {
+            //     setDense(event.target.checked);
+            // };
 
             const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
@@ -125,7 +124,7 @@ export const useDataTableLogic = <D extends BaseRow>(props: DataTableProps<D>) =
                     if (element.name === name) foundIndex = index;
                 });
 
-                navigate(`/editor/${foundIndex}`);
+                navigate(`/editor/${rows[foundIndex].uuid}`);
             }
 
             const handleResetSelect = () => {
@@ -147,7 +146,6 @@ export const useDataTableLogic = <D extends BaseRow>(props: DataTableProps<D>) =
                 handleRequestSort,
                 handleChangePage,
                 handleChangeRowsPerPage,
-                handleChangeDense,
                 handleRowClick,
                 handleResetSelect
             ];

@@ -1,4 +1,5 @@
 import { DateTime } from "luxon";
+import {Teacher} from "../models/Teacher";
 
 export const map = (val : number,
     in_min : number,
@@ -17,3 +18,13 @@ export const roundTimeToFiveMinutes = (time : DateTime) => {
 
     return roundedTime.plus({ minutes : remainder });
 };
+
+export const findTeacherByName = (teachers:Teacher[], name: string):Teacher => {
+
+    let found = new Teacher("undefined", "-1");
+    teachers.forEach((e) => {
+        if (e.name === name) found = e;
+    });
+
+    return found;
+}

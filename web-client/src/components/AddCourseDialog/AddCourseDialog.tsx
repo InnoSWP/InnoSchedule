@@ -10,15 +10,19 @@ import {
     Switch,
     TextField
 } from "@mui/material";
-import {GroupData, MultipleGroups} from "../MultipleGroups";
+import {GroupData, MultipleGroups} from "components/MultipleGroups";
 import { useAddCourseDialogLogic } from "./AddCourseDialog.logic";
-import { MultipleFields } from "../MultipleFields";
-import {useAppSelector} from "../../store";
+import { MultipleFields } from "components/MultipleFields";
+import { useAppSelector } from "store";
+import { Course } from "models/Course";
 
 export interface AddCourseDialogProps {
     open: boolean;
     onClose: () => void;
-    courseId: number;
+
+    courses: Course[];
+    courseUuid?: string;
+    addCourse: (course: Course) => void;
 }
 
 export interface CourseData {
@@ -27,6 +31,7 @@ export interface CourseData {
     isDivision: boolean;
 
     groups: Array<GroupData>;
+
 }
 
 export const AddCourseDialog:React.FunctionComponent<AddCourseDialogProps> = (props) => {
@@ -34,7 +39,6 @@ export const AddCourseDialog:React.FunctionComponent<AddCourseDialogProps> = (pr
     const logic = useAddCourseDialogLogic(props);
     const autofill = logic.useAutofill();
     const [isDivision, setDivision] = useState<boolean>(false);
-
 
     useEffect(() => {
         if (autofill) setDivision(autofill.isDivision);

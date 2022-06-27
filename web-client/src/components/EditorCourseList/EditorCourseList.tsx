@@ -5,24 +5,25 @@ import AddIcon from '@mui/icons-material/Add';
 import { CourseListCard } from "../CourseListCard";
 import { useEditorCourseListLogic } from "./EditorCourseList.logic";
 import { AddCourseDialog } from "../AddCourseDialog";
-import {
-    removeCourse,
-    useAppDispatch,
-    useAppSelector
-} from "store";
+import { Course } from "models/Course";
 
 export interface EditorCourseListProps {
-
+    courses: Course[];
+    updateCourses: () => void;
+    addCourse: (course: Course) => void;
+    removeCourse: (uuid: string) => void;
 }
 
 export const EditorCourseList:React.FunctionComponent<EditorCourseListProps> = (props) => {
 
     const logic = useEditorCourseListLogic(props);
-    const [dialogState, openDialog, closeDialog] = logic.useDialog();
-
-    const courses = useAppSelector((state) => state.courses.courses);
-    const dispatch = useAppDispatch();
-
+    const [
+        courses,
+        dialogState,
+        openDialog,
+        closeDialog,
+        removeCourse
+    ] = logic.useCoursesDialog();
 
     return <div className={styles["EditorCourseList"]}>
         <div className={styles["toolbar"]}>
@@ -31,12 +32,14 @@ export const EditorCourseList:React.FunctionComponent<EditorCourseListProps> = (
             <IconButton className={styles["button"]}
                         color="primary"
                         aria-label="add course"
-                        onClick={() => {openDialog(courses.length)}}>
+                        onClick={() => {openDialog()}}>
                 <AddIcon />
             </IconButton>
             <AddCourseDialog
                 open={dialogState.isDialogOpened}
-                courseId={dialogState.classId}
+                courseUuid={dialogState.courseUuid}
+                courses={courses}
+                addCourse={dialogState.addCourse}
                 onClose={closeDialog} />
         </div>
         <div className={styles["courses"]}>
@@ -44,8 +47,8 @@ export const EditorCourseList:React.FunctionComponent<EditorCourseListProps> = (
                                                     label={e.name}
                                                     classes={10}
 
-                                                    onRemove={() => {dispatch(removeCourse(i))}}
-                                                    onEdit={() => {openDialog(i)}}/>) }
+                                                    onRemove={() => {removeCourse(e.uuid)}}
+                                                    onEdit={() => {openDialog(e.uuid)}}/>) }
         </div>
     </div>
 }

@@ -1,4 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+export const a = 5;
+
+/* import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import {Course, CourseGroup} from "models/Course";
 import { Teacher } from 'models/Teacher';
 
@@ -28,7 +30,7 @@ const initialState: CoursesState = {
 }
 
 interface addCoursePayloadActionProps {
-    courseId: number;
+    courseId?: number;
     courseToAdd: Course;
 }
 
@@ -37,6 +39,8 @@ export const coursesSlice = createSlice({
     initialState,
     reducers: {
         addCourse: (state, action: PayloadAction<addCoursePayloadActionProps>) => {
+            if (!action.payload.courseId) action.payload.courseId = state.courses.length
+
             state.courses[action.payload.courseId] = action.payload.courseToAdd;
         },
         removeCourse: (state, action: PayloadAction<number>) => {
@@ -46,4 +50,4 @@ export const coursesSlice = createSlice({
 })
 
 export const { addCourse, removeCourse } = coursesSlice.actions;
-export default coursesSlice.reducer;
+export default coursesSlice.reducer;*/

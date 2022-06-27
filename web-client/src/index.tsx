@@ -25,8 +25,7 @@ root.render(
                       <Route index element={<App />} />
                       <Route path={"storage"} element={<ScheduleStorage />} />
                       <Route path={"resources"} element={<ResourcesStorage />} />
-                      <Route path={"editor/:id"} element={<ScheduleEditor />}>
-                      </Route>
+                      <Route path={"editor/:uuid"} element={<ScheduleEditor />}></Route>
                       <Route path={"timetable"} element={<DevTimetable />} />
                   </Route>
                   <Route path={"*"} element={<p>404</p>} />

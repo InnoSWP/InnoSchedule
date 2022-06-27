@@ -23,7 +23,7 @@ export const CourseListCard:React.FunctionComponent<CourseListCardProps> = (prop
         </CardContent>
         <CardActions>
             <Button onClick={() => {props.onRemove()}}>Remove</Button>
-            <Button onClick={() => {props.onEdit()}}>Edit</Button>
+            {/*<Button onClick={() => {props.onEdit()}}>Edit</Button>*/}
         </CardActions>
     </Card>;
 }
