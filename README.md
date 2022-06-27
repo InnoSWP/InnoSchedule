@@ -7,7 +7,7 @@ InnoSchedule is an easy-to-use schedule editor.
 - [Running](#running)
 
 ## About
-...
+InnoSchedule is a tool for creating your own schedule with ease. Project provides creating study groups with their own schedule. It catches conflicts on the different courses. And students can check the released schedule.
 
 ## How to use
 ...
