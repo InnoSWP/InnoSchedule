@@ -4,7 +4,6 @@ export const useRerenderOnResize = () => {
     let [rerenderFlag, setRerenderFlag] = useState(false);
     useLayoutEffect(() => {
         const onSizeUpdate = () => {
-            console.log(rerenderFlag);
             setRerenderFlag(!rerenderFlag);
         }
         window.addEventListener('resize', onSizeUpdate);

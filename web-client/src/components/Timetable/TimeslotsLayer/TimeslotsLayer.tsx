@@ -5,7 +5,11 @@ import { DraggableTimeslot } from "components/Timetable/TimeslotsLayer/Draggable
 import { TimetableDimensions } from "components/Timetable/Timetable.logic";
 import { DateTime, Interval } from "luxon";
 
-export interface TimeslotsLayerProps {
+export interface TimeslotLayerDrilledProps {
+    onTimeslotClick : () => void, // TODO : Implement callback properly
+}
+
+export interface TimeslotsLayerProps extends TimeslotLayerDrilledProps {
     timetableDimensions : TimetableDimensions | undefined,
     timetableInterval : Interval,
 }
@@ -30,6 +34,7 @@ export const TimeslotsLayer: React.FC<TimeslotsLayerProps> = (props) => {
         <div className={styles["timeslots"]}>
             {props.timetableDimensions ?
                 <DraggableTimeslot
+                    onClick={props.onTimeslotClick}
                     discipline="Physical Culture and Sport (Theoretical)"
                     timeInterval={time}
                     timetableDimensions={props.timetableDimensions}

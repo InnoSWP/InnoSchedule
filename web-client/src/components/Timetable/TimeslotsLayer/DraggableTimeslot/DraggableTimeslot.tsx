@@ -14,6 +14,7 @@ export interface DraggableTimeslotProps extends TimeslotDisplayParameters {
     timetableDimensions : TimetableDimensions,
     timetableInterval : Interval,
     onDragReleaseCallback : (interval : Interval, columnIndex : number) => void,
+    onClick : () => void,
 }
 
 export const DraggableTimeslot: React.FC<DraggableTimeslotProps> = (props) => {
