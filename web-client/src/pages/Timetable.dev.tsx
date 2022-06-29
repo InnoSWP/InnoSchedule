@@ -23,7 +23,18 @@ function DevTimetable() {
         });
 
     return (
-        <Timetable workingHours={workingHours} columnObjects={columnObjectWrappers}/>
+        <>
+        <Timetable
+            workingHours={workingHours}
+            columnObjects={columnObjectWrappers}
+            onTimeslotClick={() => console.log("bruh")}
+        />
+        <Timetable
+            workingHours={workingHours}
+            columnObjects={columnObjectWrappers}
+            onTimeslotClick={() => console.log("bruh")}
+        />
+        </>
     );
 }
 

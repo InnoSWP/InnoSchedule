@@ -3,7 +3,6 @@ import { useTimeslotLogic } from "./Timeslot.logic";
 import styles from "./Timeslot.module.scss";
 import { ReactDOMAttributes } from "@use-gesture/react";
 import { DraggableTimeslotProps } from "components/Timetable/TimeslotsLayer/DraggableTimeslot/DraggableTimeslot";
-import { Interval } from "luxon";
 
 export interface TimeslotProps extends DraggableTimeslotProps {
     dragBind? : ReactDOMAttributes,
@@ -18,6 +17,7 @@ export const Timeslot: React.FC<TimeslotProps> = (props) => {
             style={logic.getPositionStyle()}
             className={props.shadow ? styles["shadow-timeslot"] : styles["timeslot"]}
             {...props.dragBind}
+            onClick={props.onClick}
         >
             <span className={styles["discipline"]}>{props.discipline}</span>
             <span>{props.timeInterval.start.toFormat("HH:mm")}:{props.timeInterval.end.toFormat("HH:mm")}</span>
