@@ -29,11 +29,6 @@ function DevTimetable() {
             columnObjects={columnObjectWrappers}
             onTimeslotClick={() => console.log("bruh")}
         />
-        <Timetable
-            workingHours={workingHours}
-            columnObjects={columnObjectWrappers}
-            onTimeslotClick={() => console.log("bruh")}
-        />
         </>
     );
 }
