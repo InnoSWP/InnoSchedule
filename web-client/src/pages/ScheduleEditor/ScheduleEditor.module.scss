@@ -8,9 +8,14 @@
 
     display: flex;
 
-    .timetable {
-      max-width: calc(100% - 216px);
+    gap: 32px;
 
+    .timetables {
+
+      margin-top: 32px;
+      margin-right: 32px;
+
+      max-width: calc(100% - 216px);
       overflow-y: scroll;
     }
   }

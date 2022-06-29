@@ -9,7 +9,7 @@ export const useScheduleEditorLogic = () => {
             handleClose: () => void
         ] => {
 
-            const [isOpen, setIsOpen] = useState<boolean>(true);
+            const [isOpen, setIsOpen] = useState<boolean>(false);
 
             const handleOpen = () => {
                 setIsOpen(true);
