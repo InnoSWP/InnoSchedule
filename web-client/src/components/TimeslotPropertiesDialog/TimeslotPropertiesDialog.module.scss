@@ -1,0 +1,47 @@
+@use "src/styles/colors";
+
+.TimeslotPropertiesDialog {
+
+  .toolbar {
+
+    height: 48px;
+    box-sizing: border-box;
+
+    display: flex;
+
+    align-items: center;
+
+    padding-left: 16px;
+    padding-right: 16px;
+
+    border-bottom: 1px solid colors.$material-stroke;
+
+    .button {
+      margin-left: auto;
+    }
+  }
+
+  .content {
+    margin-top: 24px;
+
+    padding-left: 16px;
+    padding-right: 16px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 16px;
+
+    .groups {
+      display: flex;
+      gap: 6px;
+      flex-direction: column;
+
+      .groups-checkboxes {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+    }
+  }
+}
