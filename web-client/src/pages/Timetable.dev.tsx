@@ -30,11 +30,6 @@ export const DevTimetable:React.FunctionComponent<DevTimetableProps> = (props) =
             columnObjects={columnObjectWrappers}
             onTimeslotClick={() => console.log("bruh")}
         />
-        <Timetable
-            workingHours={workingHours}
-            columnObjects={columnObjectWrappers}
-            onTimeslotClick={() => console.log("bruh")}
-        />
         </>
     );
 }
