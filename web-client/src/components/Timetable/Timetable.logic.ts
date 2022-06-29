@@ -2,8 +2,8 @@ import { TimetableProps } from "components/Timetable/Timetable";
 import { MutableRefObject, useState } from "react";
 
 export type TimetableDimensions = {
-    relativePivot : { x : number, y : number },
     absolutePivot : { x : number, y : number },
+    relativePivot : { x : number, y : number },
 
     columnWidth : number,
     columnsCount : number,
@@ -19,12 +19,12 @@ export const useTimeslotsDisplayLogic = (props: TimetableProps) => {
         timetableDimensions : dimensions,
         calculateTimetableDimensions(ref: MutableRefObject<HTMLTableElement>) {
             const firstCell = this.getFirstTableCell(ref);
-            const relativePivot = this.calculateRelativePivot(firstCell!);
-            const absolutePivot = this.calculateAbsolutePivot(firstCell!);
+            const relativePivot = this.calculateRelativePivotLocation(firstCell!);
+            const absolutePivot = this.calculateAbsolutePivotLocation(firstCell!);
 
             setDimensions({
-                relativePivot,
                 absolutePivot,
+                relativePivot,
                 rowHeight: firstCell.offsetHeight,
                 columnWidth: firstCell.offsetWidth,
                 columnsCount: props.columnObjects.length,
@@ -40,13 +40,22 @@ export const useTimeslotsDisplayLogic = (props: TimetableProps) => {
             ) as HTMLElement;
         },
 
-        calculateRelativePivot(cell: HTMLElement) {
-            return { x: cell.offsetLeft, y: cell.offsetTop };
+        calculateAbsolutePivotLocation(cell: HTMLElement) {
+            let boundingRect = cell.getBoundingClientRect();
+            let scrollLeftOffset = window.document.documentElement.scrollLeft;
+            let scrollTopOffset  = window.document.documentElement.scrollTop;
+
+            return {
+                x: boundingRect.left + scrollLeftOffset,
+                y: boundingRect.top + scrollTopOffset,
+            };
         },
 
-        calculateAbsolutePivot(cell: HTMLElement) {
-            const br = cell.getBoundingClientRect();
-            return { x: br.x, y: br.y };
+        calculateRelativePivotLocation(cell : HTMLElement) {
+            return {
+                x : cell.offsetLeft,
+                y : cell.offsetTop,
+            }
         },
 
         calculateRowsCount() {

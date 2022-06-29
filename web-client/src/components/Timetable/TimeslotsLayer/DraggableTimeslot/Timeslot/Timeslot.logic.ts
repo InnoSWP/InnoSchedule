@@ -12,7 +12,7 @@ export const useTimeslotLogic = (props: TimeslotProps) => {
                 left,
                 top,
 
-                width: props.timetableDimensions.columnWidth - 20 + "px",
+                width: props.timetableDimensions.columnWidth - 4 + "px",
                 height,
             }
         },
@@ -38,6 +38,8 @@ export const useTimeslotLogic = (props: TimeslotProps) => {
 
             const pivotOffset = props.timetableDimensions.relativePivot.y;
             const dayStartToTimeslotIntervalSize = this.calculateIntervalSize(dayStartToTimeslotInterval);
+
+            console.log(pivotOffset);
 
             return pivotOffset + dayStartToTimeslotIntervalSize;
         },

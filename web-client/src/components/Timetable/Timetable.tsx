@@ -1,18 +1,20 @@
-import React, { ForwardedRef, MutableRefObject, useEffect, useRef } from "react";
+import React, { MutableRefObject, useLayoutEffect, useRef } from "react";
 import { useTimeslotsDisplayLogic } from "components/Timetable/Timetable.logic";
 import { TimetableGrid, TimetableGridProps } from "components/Timetable/TimetableGrid";
 import styles from "components/Timetable/Timetable.module.scss";
 import { TimeslotsLayer } from "components/Timetable/TimeslotsLayer";
+import { useRerenderOnResize } from "utilities/hooks/useRerenderOnResize";
 
 export type TimetableProps = TimetableGridProps
 
 export const Timetable: React.FC<TimetableProps> = (props) => {
+    let rerenderFlag = useRerenderOnResize();
     const logic = useTimeslotsDisplayLogic(props);
     const ref = useRef<HTMLTableElement>() as MutableRefObject<HTMLTableElement>;
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         logic.calculateTimetableDimensions(ref);
-    }, [props]);
+    }, [props, rerenderFlag]);
 
     return (
         <div className={styles["timetable"]}>

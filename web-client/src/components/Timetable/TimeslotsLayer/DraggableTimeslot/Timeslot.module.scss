@@ -1,19 +1,5 @@
-.timeslot {
-
-  position: absolute;
-
-  background-image: radial-gradient(circle, #1e3c72 10%, #2a5298 90%);
-  border-radius: 4px;
-
-  width: 160px;
-  height: 160px;
-
-  cursor: pointer;
-}
-
 .shadow-timeslot {
   @extend .timeslot;
 
   opacity: 80%;
-
 }
