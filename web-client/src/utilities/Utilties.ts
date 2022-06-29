@@ -1,4 +1,4 @@
-import { DateTime } from "luxon";
+import { DateTime, Interval } from "luxon";
 import { Teacher } from "models/Teacher";
 import { ScheduleForList } from "models/ScheduleForList";
 
@@ -11,6 +11,37 @@ export const map = (val : number,
 ) => {
     return (val - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 };
+
+export const clamp = (val : number, bounds : [number, number]) => {
+    return Math.min(Math.max(val, bounds[0]), bounds[1]);
+}
+
+export const clampInterval = (interval : Interval, bound : Interval) => {
+    const difference = interval.difference(bound);
+
+    if(difference.length === 0) return interval;
+
+    const diff   = difference[0];
+    const length = diff.length();
+
+    if(bound.abutsStart(diff)) {
+        return interval
+            .mapEndpoints((time) =>
+                time.minus(length)
+            );
+    } else {
+        return interval
+            .mapEndpoints((time) =>
+                time.plus(length)
+            );
+    }
+}
+
+export const logInterval = (interval : Interval) => {
+    const start = interval.start.toFormat("HH:mm");
+    const end = interval.end.toFormat("HH:mm");
+    console.log(`${start} -> ${end}`);
+}
 
 export const roundTimeToFiveMinutes = (time : DateTime) => {
     const roundedTime = time.startOf("minute");

@@ -4,8 +4,9 @@ import { Weekday } from "models/Weekday";
 import { WeekDayColumnObjectWrapper } from "components/Timetable/TimetableGrid/ColumnObjectWrappers/WeekDayColumnObjectWrapper";
 import { Timetable } from "components/Timetable/Timetable";
 
+interface DevTimetableProps {}
 
-function DevTimetable() {
+export const DevTimetable:React.FunctionComponent<DevTimetableProps> = (props) => {
 
     const workingHours = Interval.fromDateTimes(
         DateTime.fromObject({

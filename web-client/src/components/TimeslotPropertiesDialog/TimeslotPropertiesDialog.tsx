@@ -29,7 +29,7 @@ export const TimeslotPropertiesDialog:React.FunctionComponent<TimeslotProperties
                     <Typography>
                         Properties
                     </Typography>
-                    <Button variant="contained" className={styles["button"]}>
+                    <Button variant="contained" className={styles["button"]} onClick={onClose}>
                         Save
                     </Button>
                 </div>

@@ -20,16 +20,16 @@ export const ScheduleEditor:React.FunctionComponent = () => {
     if (!uuid) uuid = "new";
 
     const [courses, updateCourses, addCourse, removeCourse] = useCourses(uuid);
+    const [setLabel] = useSetHeader("Editor", "/storage");
 
     const schedules = useAppSelector((state) => state.schedules.list);
 
-    let label = "Editor";
     useEffect(() => {
+        if (uuid && findScheduleByUuid(schedules, uuid).name !== "undefined") {
+            setLabel(findScheduleByUuid(schedules, uuid).name);
+        }
         updateCourses();
-    }, []);
-
-    if (uuid) label = findScheduleByUuid(schedules, uuid).name;
-    useSetHeader(label, "/storage");
+    }, [schedules]);
 
     const [
         isPropertiesDialogOpen,

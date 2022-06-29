@@ -12,7 +12,10 @@ export const useLayoutLogic = () => {
     }
 }
 
-export const useSetHeader = (label: string, buttonLink?: string) => {
+export const useSetHeader = (label: string, buttonLink?: string):[
+    setLabel: (label: string) => void,
+    setButtonLink: (buttonLink: string) => void
+] => {
     const { setLabel, setButtonLink } = useOutletContext<any>();
 
     if (buttonLink === undefined) buttonLink = "";
@@ -21,4 +24,6 @@ export const useSetHeader = (label: string, buttonLink?: string) => {
         setLabel(label);
         setButtonLink(buttonLink);
     }, []);
+
+    return [setLabel, setButtonLink];
 }
