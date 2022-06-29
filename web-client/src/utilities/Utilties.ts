@@ -1,5 +1,6 @@
 import { DateTime, Interval } from "luxon";
-import {Teacher} from "models/Teacher";
+import { Teacher } from "models/Teacher";
+import { ScheduleForList } from "models/ScheduleForList";
 
 export const map = (val : number,
     in_min : number,
@@ -55,6 +56,16 @@ export const findTeacherByName = (teachers:Teacher[], name: string):Teacher => {
     let found = new Teacher("undefined", "-1");
     teachers.forEach((e) => {
         if (e.name === name) found = e;
+    });
+
+    return found;
+}
+
+export const findScheduleByUuid = (schedules:ScheduleForList[], uuid: string):ScheduleForList => {
+
+    let found = new ScheduleForList("undefined", 0, "-1");
+    schedules.forEach((e) => {
+        if (e.uuid === uuid) found = e;
     });
 
     return found;
