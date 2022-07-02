@@ -53,7 +53,7 @@ export const ScheduleEditor:React.FunctionComponent = () => {
                         "margin-bottom": "16px",
                         "margin-left": "52px"
                     }}>Monday</Typography>
-                    <DevTimetable />
+                    <DevTimetable onTimeslotClick={handlePropertiesOpen}/>
                 </div>
             </div>
         </div>

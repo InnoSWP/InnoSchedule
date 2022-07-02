@@ -4,7 +4,9 @@ import { Weekday } from "models/Weekday";
 import { WeekDayColumnObjectWrapper } from "components/Timetable/TimetableGrid/ColumnObjectWrappers/WeekDayColumnObjectWrapper";
 import { Timetable } from "components/Timetable/Timetable";
 
-interface DevTimetableProps {}
+interface DevTimetableProps {
+    onTimeslotClick: () => void;
+}
 
 export const DevTimetable:React.FunctionComponent<DevTimetableProps> = (props) => {
 
@@ -28,7 +30,7 @@ export const DevTimetable:React.FunctionComponent<DevTimetableProps> = (props) =
         <Timetable
             workingHours={workingHours}
             columnObjects={columnObjectWrappers}
-            onTimeslotClick={() => console.log("bruh")}
+            onTimeslotClick={props.onTimeslotClick}
         />
         </>
     );

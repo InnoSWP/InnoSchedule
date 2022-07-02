@@ -12,8 +12,12 @@
 
     .timetables {
 
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+
       margin-top: 32px;
-      margin-right: 32px;
+      padding-right: 32px;
 
       max-width: calc(100% - 216px);
       overflow-y: scroll;
