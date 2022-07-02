@@ -5,7 +5,10 @@ InnoSchedule is an easy-to-use schedule editor.
 
 ## Table of contents
 - [About](#about)
+- [Demo](#demo)
 - [How to use](#how-to-use)
+- [Feature list](#features-list)
+- [Used](#used)
 - [Running](#running)
 
 ## About
