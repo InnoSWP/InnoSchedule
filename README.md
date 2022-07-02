@@ -9,8 +9,10 @@ InnoSchedule is an easy-to-use schedule editor.
 ## About
 InnoSchedule is a tool for creating your own schedule with ease. Project provides creating study groups with their own schedule. It catches conflicts on the different courses. And students can check the released schedule.
 
+## Demo
+
 ## How to use
-...
+This tool will be deployed as soon as it will be complete to use. Now you can build tool by yourself using Running section. API developer build version is now available to test in Innopolis University Intranet on following address: https://10.90.138.239:8000/api/v1/
 
 ## Used
 
