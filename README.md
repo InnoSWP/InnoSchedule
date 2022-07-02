@@ -1,3 +1,5 @@
+[![Django CI](https://github.com/InnoSWP/InnoSchedule/actions/workflows/django.yml/badge.svg?branch=master)](https://github.com/InnoSWP/InnoSchedule/actions/workflows/django.yml)
+
 # InnoSchedule
 InnoSchedule is an easy-to-use schedule editor.
 
