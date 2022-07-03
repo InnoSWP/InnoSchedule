@@ -45,9 +45,8 @@ export const useTimeslotLogic = (props: TimeslotProps) => {
         calculateIntervalSize(interval : Interval) {
             const halfHourLength = props.timetableDimensions.rowHeight;
             const minutesInInterval = interval.length('minute');
-            const borderOffset = Math.ceil(minutesInInterval / 30) / 10;
 
-            return (halfHourLength * minutesInInterval) / 30 + borderOffset;
+            return (halfHourLength * minutesInInterval) / 30;
         },
     }
 }
