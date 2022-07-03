@@ -4,8 +4,11 @@ import { Timetable } from "components/Timetable/Timetable";
 import { capitalizeString, createInterval, createTimeslot } from "utilities/Utilties";
 import { Timeslot } from "models/Timeslot";
 
+interface DevTimetableProps {
+    onTimeslotClick: () => void;
+}
 
-function DevTimetable() {
+export const DevTimetable:React.FunctionComponent<DevTimetableProps> = (props) => {
 
     const workingHours = createInterval("09:00", "17:00");
 

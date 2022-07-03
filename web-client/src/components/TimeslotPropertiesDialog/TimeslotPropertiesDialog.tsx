@@ -29,7 +29,7 @@ export const TimeslotPropertiesDialog:React.FunctionComponent<TimeslotProperties
                     <Typography>
                         Properties
                     </Typography>
-                    <Button variant="contained" className={styles["button"]}>
+                    <Button variant="contained" className={styles["button"]} onClick={onClose}>
                         Save
                     </Button>
                 </div>
@@ -41,20 +41,23 @@ export const TimeslotPropertiesDialog:React.FunctionComponent<TimeslotProperties
 
                     <TextField label={"Activity"}
                                size={"small"}
-                               variant={"standard"} />
+                               variant={"standard"}
+                               defaultValue={"Lecture"}/>
                     <TextField label={"Room"}
                                size={"small"}
-                               variant={"standard"} />
+                               variant={"standard"}
+                               defaultValue={"301"} />
                     <TextField label={"Teacher"}
                                size={"small"}
-                               variant={"standard"} />
+                               variant={"standard"}
+                               defaultValue={"Rabab Marouf"} />
                     <div className={styles["groups"]}>
                         <Typography>Groups:</Typography>
                         <div className={styles["groups-checkboxes"]}>
-                            <FormControlLabel control={<Checkbox defaultChecked />} label="Group 1" />
+                            <FormControlLabel control={<Checkbox />} label="Group 1" />
                             <FormControlLabel control={<Checkbox />} label="Group 2" />
                             <FormControlLabel control={<Checkbox />} label="Group 3" />
-                            <FormControlLabel control={<Checkbox />} label="Group 4" />
+                            <FormControlLabel control={<Checkbox defaultChecked />} label="Group 4" />
                             <FormControlLabel control={<Checkbox />} label="Group 5" />
                             <FormControlLabel control={<Checkbox />} label="Group 6" />
                             <FormControlLabel control={<Checkbox />} label="Group 7" />

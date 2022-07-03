@@ -11,6 +11,7 @@ import { TimeslotPropertiesDialog } from "components/TimeslotPropertiesDialog";
 import { useScheduleEditorLogic } from "pages/ScheduleEditor/ScheduleEditor.logic";
 import { useAppSelector } from "store";
 import { findScheduleByUuid } from "utilities/Utilties";
+import { Typography } from "@mui/material";
 
 export const ScheduleEditor:React.FunctionComponent = () => {
 
@@ -20,16 +21,16 @@ export const ScheduleEditor:React.FunctionComponent = () => {
     if (!uuid) uuid = "new";
 
     const [courses, updateCourses, addCourse, removeCourse] = useCourses(uuid);
+    const [setLabel] = useSetHeader("Editor", "/storage");
 
     const schedules = useAppSelector((state) => state.schedules.list);
 
-    let label = "Editor";
     useEffect(() => {
+        if (uuid && findScheduleByUuid(schedules, uuid).name !== "undefined") {
+            setLabel(findScheduleByUuid(schedules, uuid).name);
+        }
         updateCourses();
-    }, []);
-
-    if (uuid) label = findScheduleByUuid(schedules, uuid).name;
-    useSetHeader(label, "/storage");
+    }, [schedules]);
 
     const [
         isPropertiesDialogOpen,
@@ -45,8 +46,15 @@ export const ScheduleEditor:React.FunctionComponent = () => {
                               updateCourses={updateCourses}
                               addCourse={addCourse}
                               removeCourse={removeCourse}/>
-            <div className={styles["timetable"]}>
-                <DevTimetable />
+            <div className={styles["timetables"]}>
+                <div>
+                    <Typography sx={{
+                        "font-size": "24px",
+                        "margin-bottom": "16px",
+                        "margin-left": "52px"
+                    }}>Monday</Typography>
+                    <DevTimetable onTimeslotClick={handlePropertiesOpen}/>
+                </div>
             </div>
         </div>
 
