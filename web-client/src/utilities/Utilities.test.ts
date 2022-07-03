@@ -1,4 +1,4 @@
-import { clampInterval, map, roundTimeToFiveMinutes } from "utilities/Utilties";
+import { clampInterval, createTimeslot, map, roundTimeToFiveMinutes } from "utilities/Utilties";
 import { DateTime, Interval } from "luxon";
 
 test('map utility', () => {
@@ -44,5 +44,23 @@ test('clampInterval utility', () => {
             hour: 12,
         })
     ));
+})
+
+test("createTimeslot utility", () => {
+    const createdTimeslot = createTimeslot("Some name", "09:00", "21:00");
+
+    const standardTimeslot = {
+        name : "Some name",
+        interval : Interval.fromDateTimes(
+            DateTime.fromObject({
+                hour: 9
+            }),
+            DateTime.fromObject({
+                hour: 21
+            })
+        )
+    }
+
+    expect(createdTimeslot).toEqual(standardTimeslot);
 })
 

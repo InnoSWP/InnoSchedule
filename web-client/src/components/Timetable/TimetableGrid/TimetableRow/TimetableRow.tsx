@@ -2,7 +2,6 @@ import React from "react";
 import { useTimetableRowLogic } from "components/Timetable/TimetableGrid/TimetableRow/TimetableRow.logic";
 import { Interval } from "luxon";
 import { TimetableGridProps } from "components/Timetable/TimetableGrid/TimetableGrid";
-import { ColumnObjectWrapper } from "components/Timetable/TimetableGrid/ColumnObjectWrappers/ColumnObjectWrapper";
 import axisStyles from "components/Timetable/TimetableGrid/TimetableAxis.module.scss";
 import styles from "components/Timetable/TimetableGrid/TimetableRow/TimetableRow.module.scss";
 
@@ -22,6 +21,6 @@ export const TimetableRow: React.FunctionComponent<TimetableRowProps> = (props) 
     );
 }
 
-function getRowCell(object : ColumnObjectWrapper<any>, index : number) {
+function getRowCell(object : never, index : number) {
     return <td key={index} className={styles["timetableRowCell"]}></td>
 }

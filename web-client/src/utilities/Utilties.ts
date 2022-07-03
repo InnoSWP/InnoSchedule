@@ -1,6 +1,7 @@
 import { DateTime, Interval } from "luxon";
 import { Teacher } from "models/Teacher";
 import { ScheduleForList } from "models/ScheduleForList";
+import { Timeslot } from "models/Timeslot";
 
 export const map = (val : number,
     in_min : number,
@@ -51,6 +52,22 @@ export const roundTimeToFiveMinutes = (time : DateTime) => {
     return roundedTime.plus({ minutes : remainder });
 };
 
+export type TimeString = `${number}:${number}`;
+
+export const createInterval = (timeStart : TimeString, timeEnd : TimeString) => {
+    const dateTimeStart = DateTime.fromFormat(timeStart, "HH:mm");
+    const dateTimeEnd   = DateTime.fromFormat(timeEnd, "HH:mm");
+
+    return Interval.fromDateTimes(dateTimeStart, dateTimeEnd);
+}
+
+export const createTimeslot = (name : string, timeStart : TimeString, timeEnd : TimeString) => {
+    return {
+        name,
+        interval : createInterval(timeStart, timeEnd),
+    } as Timeslot;
+}
+
 export const findTeacherByName = (teachers:Teacher[], name: string):Teacher => {
 
     let found = new Teacher("undefined", "-1");
@@ -69,4 +86,12 @@ export const findScheduleByUuid = (schedules:ScheduleForList[], uuid: string):Sc
     });
 
     return found;
+}
+
+export const capitalizeString = (
+    str : string,
+    locale = navigator.language
+) => {
+    const [firstLetter, ...rest] = str;
+    return firstLetter.toLocaleUpperCase(locale) + rest.join('')
 }

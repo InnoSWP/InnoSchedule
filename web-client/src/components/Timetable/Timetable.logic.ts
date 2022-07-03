@@ -1,4 +1,4 @@
-import { TimetableProps } from "components/Timetable/Timetable";
+import { TimetableCombinedProps } from "components/Timetable/Timetable";
 import { MutableRefObject, useState } from "react";
 
 export type TimetableDimensions = {
@@ -12,7 +12,7 @@ export type TimetableDimensions = {
     rowsCount : number,
 };
 
-export const useTimeslotsDisplayLogic = (props: TimetableProps) => {
+export const useTimeslotsDisplayLogic = (props: TimetableCombinedProps) => {
     const [dimensions, setDimensions] = useState<TimetableDimensions | undefined>(undefined);
 
     return {
@@ -27,7 +27,7 @@ export const useTimeslotsDisplayLogic = (props: TimetableProps) => {
                 relativePivot,
                 rowHeight: firstCell.offsetHeight,
                 columnWidth: firstCell.offsetWidth,
-                columnsCount: props.columnObjects.length,
+                columnsCount: props.timeslots.size,
                 rowsCount: this.calculateRowsCount(),
             });
         },
