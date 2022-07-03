@@ -25,7 +25,7 @@ InnoSchedule is a tool for creating your own schedule with ease. Project provide
 
 
 ## How to use
-This tool will be deployed as soon as it will be complete to use. Now you can build tool by yourself using Running section. API developer build version is now available to test in Innopolis University Intranet on the following address: https://10.90.138.239:8000/api/v1/
+This tool iis deployed for testing in Innopolis Intranet: http://10.90.138.239:3000/storage Now you can build tool by yourself using Running section. API developer build version is now available to test in Innopolis University Intranet on the following address: http://10.90.138.239:8000/api/v1/
 
 ## Features list
  - Creating and editing the schedule
