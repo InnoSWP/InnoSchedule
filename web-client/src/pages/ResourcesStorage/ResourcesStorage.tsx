@@ -23,7 +23,7 @@ export const ResourcesStorage:React.FunctionComponent = () => {
     ] = logic.useAddDialog();
     const [
         isRemoveOpen,
-        handleRemoveOpen,
+        getHandleRemoveOpen,
         handleRemoveClose,
         handleRemoveConfirm
     ] = logic.useRemoveDialog();
@@ -89,21 +89,21 @@ export const ResourcesStorage:React.FunctionComponent = () => {
         <DataTable
             label={"Teachers"}
             createNew={ getHandleCreateNew("teachers") }
-            removeItems={ handleRemoveOpen }
+            removeItems={ getHandleRemoveOpen("teachers") }
             rows={teachersRows}
             headCells={teachersColumns} />
 
         <DataTable
             label={"Rooms"}
             createNew={ getHandleCreateNew("rooms") }
-            removeItems={ handleRemoveOpen }
+            removeItems={ getHandleRemoveOpen("rooms") }
             rows={roomsRows}
             headCells={roomsColumns} />
 
         <DataTable
             label={"Activities"}
             createNew={ getHandleCreateNew("activities") }
-            removeItems={ handleRemoveOpen }
+            removeItems={ getHandleRemoveOpen("activities") }
             rows={activitiesRows}
             headCells={activitiesColumns} />
 

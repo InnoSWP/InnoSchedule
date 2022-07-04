@@ -1,10 +1,19 @@
 import { useState } from "react";
-import { useTeachers } from "../../hooks/useTeachers";
-import {useRooms} from "../../hooks/useRooms";
+import { useTeachers } from "hooks/useTeachers";
+import {useRooms} from "hooks/useRooms";
 import { useActivities } from "hooks/useActivities";
+import { useAppSelector } from "store";
 
 
 export const useResourcesStorageLogic = () => {
+
+    const [updateTeachers, addTeacher, removeTeacher] = useTeachers();
+    const [updateRooms, addRoom, removeRoom] = useRooms();
+    const [updateActivities, addActivity, removeActivity] = useActivities();
+
+    const teachers = useAppSelector((state) => state.teachers.list);
+    const rooms = useAppSelector((state) => state.rooms.list);
+    const activities = useAppSelector((state) => state.activities.list);
 
     return {
         useAddDialog: function (): [
@@ -48,10 +57,6 @@ export const useResourcesStorageLogic = () => {
                 setOpen(false);
             }
 
-            const [updateTeachers, addTeacher] = useTeachers();
-            const [updateRooms, addRoom] = useRooms();
-            const [updateActivities, addActivity] = useActivities();
-
             const submitForm = (resourceName: "teachers" | "rooms" | "activities") => {
 
                 switch (resourceName) {
@@ -77,29 +82,62 @@ export const useResourcesStorageLogic = () => {
         },
         useRemoveDialog(): [
             open: boolean,
-            handleOpen: (selected: readonly string[], setSelected: (selected: readonly string[]) => void) => void,
+            getHandleOpen: (resourceName: "teachers" | "rooms" | "activities") =>
+                (selected: readonly string[], setSelected: (selected: readonly string[]) => void)
+                    => void,
             handleClose: () => void,
             handleRemove: () => void
         ] {
             const [open, setOpen] = useState<boolean>(false);
             const [handleRemove, setHandleRemove] = useState<()=>void>(() => {});
 
-            const handleOpen = (selected: readonly string[], setSelected: (selected: readonly string[]) => void) => {
-                setOpen(true);
+            const getHandleOpen = (resourceName: "teachers" | "rooms" | "activities") => {
 
-                // setHandleRemove(() => {return () => {
-                //     schedules.forEach((element) => {
-                //         if (selected.includes(element.name)) dispatch(removeResourceSchedule(element));
-                //     });
-                //     setSelected([]);
-                // }})
+                switch (resourceName) {
+                    case "teachers":
+                        return () => {
+                            setOpen(true);
+                            setHandleRemove(() => {
+                                return (selected: readonly string[], setSelected: (selected: readonly string[]) => void) => {
+                                    teachers.forEach((element) => {
+                                        if (selected.includes(element.name)) removeTeacher(element.uuid);
+                                    });
+                                    setSelected([]);
+                                }
+                            })
+                        }
+                    case "activities":
+                        return () => {
+                            setOpen(true);
+                            setHandleRemove(() => {
+                                return (selected: readonly string[], setSelected: (selected: readonly string[]) => void) => {
+                                    activities.forEach((element) => {
+                                        if (selected.includes(element.name)) removeActivity(element.uuid);
+                                    });
+                                    setSelected([]);
+                                }
+                            })
+                        }
+                    case "rooms":
+                        return () => {
+                            setOpen(true);
+                            setHandleRemove(() => {
+                                return (selected: readonly string[], setSelected: (selected: readonly string[]) => void) => {
+                                    rooms.forEach((element) => {
+                                        if (selected.includes(element.name)) removeRoom(element.uuid);
+                                    });
+                                    setSelected([]);
+                                }
+                            })
+                        }
+                }
             }
 
             const handleClose = () => {
                 setOpen(false);
             }
 
-            return [open, handleOpen, handleClose, handleRemove];
+            return [open, getHandleOpen, handleClose, handleRemove];
         }
     }
 }

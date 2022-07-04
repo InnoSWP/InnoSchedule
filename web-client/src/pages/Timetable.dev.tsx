@@ -34,7 +34,7 @@ export const DevTimetable:React.FunctionComponent<DevTimetableProps> = (props) =
             columnObjectToString={weekdayToString}
             timeslots={timeslots}
             workingHours={workingHours}
-            onTimeslotClick={() => console.log("bruh")}
+            onTimeslotClick={() => props.onTimeslotClick()}
             onTimeslotMove={setTimeslots}
         />
     );
